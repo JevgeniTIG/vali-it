@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Page</title>
+</head>
+<body>
+TEST PAGE
+<form>
+    <input type="email" id="emailInput">
+    <input type="button" id="testButton1" value="Submit">
+
+</form>
+<table id="MyTable">
+    <tr>
+        <td>One</td>
+        <td>Two</td>
+        <td>Three</td>
+    </tr>
+</table>
+<button onclick="alert('Hello, Darling!')">
+    Please click me!
+</button>
+<button id="testButton2">
+    Sums two given numbers
+</button>
+<button id="testButton3">
+    Months left in 2020
+</button>
+
+
+</body>
+<script>
+
+    let button1=document.getElementById("testButton1")
+    button1.onclick=function(){
+    //alert(emailInput.value.innerHTML="You entered " + emailInput.value)
+    button1.value = emailInput.value
+
+    }
+
+
+    let button2=document.getElementById("testButton2")
+    button2.onclick = function(){
+    let a=5;
+    let b=7;
+    alert(a+b)
+    }
+
+    let button3=document.getElementById("testButton3")
+    let action=function(){
+    let monthsTotal = 12;
+    let monthsCurrent = 9;
+    alert("There are "  + (monthsTotal-monthsCurrent) + " months left in 2020")
+    }
+    button3.addEventListener('click', action)
+
+
+</script>
+</body>
+
+</html>
