@@ -14,6 +14,8 @@ public class ClientData {
     private BigDecimal amount;
     private BigDecimal balance;
     private BigDecimal withdraw;
+    private String login;
+    private String password;
 
     public BigInteger getCustomerId() {
         return customerId;
@@ -95,17 +97,19 @@ public class ClientData {
         this.withdraw = withdraw;
     }
 
-    public BigDecimal getDeposit() {
-        return deposit;
+    public String getLogin() {
+        return login;
     }
 
-    public void setDeposit(BigDecimal deposit) {
-        this.deposit = deposit;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    private BigDecimal deposit;
+    public String getPassword() {
+        return password;
+    }
 
-
-
-
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

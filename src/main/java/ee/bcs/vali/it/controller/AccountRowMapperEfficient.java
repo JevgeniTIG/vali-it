@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class AccountRowMapperEfficient implements RowMapper<ClientDataStatement> {
+public class AccountRowMapperEfficient implements RowMapper<ClientDataStatement>{
     @Override
     public ClientDataStatement mapRow(ResultSet resultSet, int i) throws SQLException {
         ClientDataStatement clientData = new ClientDataStatement();
@@ -17,6 +17,7 @@ public class AccountRowMapperEfficient implements RowMapper<ClientDataStatement>
         clientData.setBalance(resultSet.getBigDecimal("balance"));
         return clientData;
     }
+
 }
 
 

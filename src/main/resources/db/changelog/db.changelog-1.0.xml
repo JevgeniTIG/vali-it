@@ -15,6 +15,12 @@
             <column name="lastname" type="TEXT">
                 <constraints nullable="false"/>
             </column>
+            <column name="login" type="TEXT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
         <createTable  tableName="accounts">

@@ -13,17 +13,56 @@ import java.util.Map;
 @Repository
 public class AccountRepository {
 
+
     @Autowired
     private NamedParameterJdbcTemplate dataBase;
 
-    public void createUser(BigInteger id, String name, String lastname){
-        String sql = "INSERT INTO customer(name, lastname) " +
-                "VALUES (:name, :lastname)";
+    public String customerLogin(String login){
+        String sql ="SELECT password FROM customer WHERE login= :login";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("login", login);
+        return dataBase.queryForObject(sql, paramMap, String.class);
+    }
+
+
+    public List welcomeUser(String login){
+        //Content of the table 'customer': name, lastname
+        String sql = "SELECT name, lastname " +
+                "FROM customer WHERE login= :login";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("login", login);
+        List<ClientData> resultList = dataBase.query(sql, paramMap, new WelcomeUserRowMapper());
+        return resultList;
+    }
+
+
+    public String getBalanceLogged(String login){
+        String sql ="SELECT balance FROM accounts WHERE customer_id = (SELECT id FROM customer WHERE login= :login)";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("login", login);
+        return dataBase.queryForObject(sql, paramMap, String.class);
+    }
+
+
+    public List showStatementLogged(String login){
+        //Content of the table 'transactions': account_id, account, deposit, withdraw, balance
+        String sql = "SELECT * FROM transactions WHERE account_id = (SELECT id FROM customer WHERE login= :login)";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("login", login);
+        List<ClientDataStatement> resultList = dataBase.query(sql, paramMap, new AccountRowMapperEfficient());
+        return resultList;
+    }
+
+
+    public void createUser(BigInteger id, String name, String lastname, String login, String password){
+        String sql = "INSERT INTO customer(name, lastname, login, password) " +
+                "VALUES (:name, :lastname, :login, :password)";
         Map<String, Object> paramMap1 = new HashMap<>();
         paramMap1.put("name", name);
         paramMap1.put("lastname", lastname);
+        paramMap1.put("login", login);
+        paramMap1.put("password", password);
         dataBase.update(sql, paramMap1);
-
     }
 
 
@@ -102,8 +141,8 @@ public class AccountRepository {
 
 
     public List showStatementByAccount(BigInteger accountId){
-
-        String sql = "SELECT account_id, account, deposit, withdraw, balance " +
+        //Content of the table 'transactions': account_id, account, deposit, withdraw, balance
+        String sql = "SELECT * " +
                 "FROM transactions WHERE account_id= :account_id";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("account_id", accountId);

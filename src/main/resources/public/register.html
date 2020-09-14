@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="styles.css">
+
+
+</head>
+<body>
+<img src="mrb_header.jpg" width="1200" height="120">
+<h5>
+</h5>
+<form>
+    <!Welcomes customer>
+    <span id="helloMessage"></span>
+    <span style="padding-left:800px"></span>
+    <input class="button-function" type="button" id="logOut" onclick="location.href='index.html'"
+           value="Log Out" style="height:20px;width=60px">
+</form>
+<h5>
+</h5>
+<form>
+    <!Creates customer>
+    <input type="text" id="firstName" placeholder="First Name">
+    <input type="text" id="lastName" placeholder="Last Name">
+    <input type="text" id="customerLogin" placeholder="Login">
+    <input type="text" id="customerPassword" placeholder="Password">
+    <input class="button-function" type="button" id="createCustomerButton" value="Register customer">
+</form>
+<h5>
+</h5>
+<form>
+    <!Creates account>
+    <input type="text" id="account" placeholder="Account Number">
+    <input type="text" id="balance" placeholder="Balance">
+    <input type="text" id="customerId" placeholder="Customer ID">
+    <input class="button-function" type="button" onclick="location.href='index.html'" id="createAccountButton"
+           value="Register account">
+</form>
+<h5>
+</h5>
+
+</body>
+
+<script>
+
+        // Welcomes customer
+
+        fetch('/welcome_user', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+            })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (jsonData) {
+            var html = '<span>';
+			for (var i = 0; i < jsonData.length; ++i) {
+				var item = jsonData[i];
+                html += item.firstName;
+                html += ' ';
+                html += item.lastName;
+                html += '!';
+            }
+            html += '</span>'
+            helloMessage.innerHTML = 'Welcome, ' + html;
+
+        })
+
+
+        .catch(function (err) {
+            console.log(err);
+            alert('oops');
+        });
+
+
+    // Creates new customer
+    let registerButton = document.getElementById("createCustomerButton")
+    registerButton.addEventListener('click', function createCustomer() {
+
+        fetch('/enter_new_customer_efficient', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+				body: JSON.stringify({
+					firstName: firstName.value,
+					lastName: lastName.value,
+					login: customerLogin.value,
+					password: customerPassword.value
+
+				})
+            })
+
+        .then(function (response) {
+            registerButton.value = 'Customer registered';
+            firstName.value = ' ';
+            lastName.value = ' ';
+            customerLogin.value = ' ';
+            customerPassword.value = ' ';
+        })
+
+        .catch(function (err) {
+            alert('User with such name or login already exists');
+        });
+
+    });
+
+    // Creates new account
+    let registerAccountButton = document.getElementById("createAccountButton")
+    registerAccountButton.addEventListener('click', function createAccount() {
+
+        fetch('/enter_new_account_efficient', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+				body: JSON.stringify({
+					account: account.value,
+					balance: balance.value,
+					customerId: customerId.value
+
+				})
+            })
+
+        .then(function (response) {
+            registerAccountButton.value = 'Account created';
+            account.value = ' ';
+            balance.value = ' ';
+            customerId.value = ' ';
+        })
+
+        .catch(function (err) {
+            alert('Something went wrong');
+        });
+
+    });
+
+
+
+
+</script>
+</html>

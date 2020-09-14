@@ -1,6 +1,7 @@
 package ee.bcs.vali.it.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -12,9 +13,37 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    //Login
+
+    public String customerLogin(String password){
+        return passwordEncoder.encode(password);
+        }
+
+    // Welcomes the user that is currently logged in
+    public List welcomeUser(String userName){
+        return accountRepository.welcomeUser(userName);
+    }
+
+    //Shows account balance of logged user
+    public String getBalanceLogged(String balance){
+        return accountRepository.getBalanceLogged(balance);
+    }
+
+
+    //Shows account statement of logged user
+    public List showStatementLogged(String balance){
+        return accountRepository.showStatementLogged(balance);
+    }
+
+
     //Creates user
-    public void createUser(BigInteger id, String name, String lastName){
-        accountRepository.createUser(id, name, lastName);
+    public void createUser(BigInteger id, String name, String lastName, String login, String password){
+
+        accountRepository.createUser(id, name, lastName, login, passwordEncoder.encode(password));
+
     }
 
     //Creates account related to user
