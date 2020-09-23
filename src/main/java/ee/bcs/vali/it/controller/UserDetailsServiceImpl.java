@@ -13,11 +13,11 @@ import org.springframework.stereotype.Service;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private AccountRepository clientData;
+    private BeautyRepository beautyRepository;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-        String password = clientData.customerLogin(userName);
+        String password = beautyRepository.hostLogin(userName);
         return User.withUsername(userName).password(password).roles("USER").build();
     }
 }

@@ -1,12 +1,12 @@
 package ee.bcs.vali.it.controller;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+        import org.springframework.context.annotation.Bean;
+        import org.springframework.context.annotation.Configuration;
+        import org.springframework.core.annotation.Order;
+        import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+        import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+        import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+        import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 @Configuration
@@ -17,14 +17,16 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/styles.css", "/mrb_header.jpg",
-                        "/enter_new_customer_efficient", "/enter_new_account_efficient").permitAll()
+                .antMatchers("/styles.css", "/logo.png", "/images/**",
+                        "/pic_carousel_1.jpg", "/register_new_host", "/host_register_page.html",
+                        "/css/**", "/fonts/**", "/", "/add_service", "/show_logged_host_services",
+                        "/delete_service", "/show_suitable_services").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/")
+                .loginPage("/host_login_page.html")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/internet_bank.html")
+                .defaultSuccessUrl("/host_page.html")
 
                 //.failureUrl("/?error=true")
                 .permitAll()

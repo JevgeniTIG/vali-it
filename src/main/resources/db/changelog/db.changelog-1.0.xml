@@ -4,18 +4,18 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
-    <changeSet  author="Jevgeni"  id="2020-09-04">
-        <createTable tableName="customer">
+    <changeSet  author="Jevgeni"  id="2020-09-14">
+        <createTable tableName="users">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
             </column>
-            <column name="name" type="TEXT">
+            <column name="firstname" type="TEXT">
                 <constraints nullable="false"/>
             </column>
             <column name="lastname" type="TEXT">
                 <constraints nullable="false"/>
             </column>
-            <column name="login" type="TEXT">
+            <column name="userlogin" type="TEXT">
                 <constraints nullable="false" unique="true"/>
             </column>
             <column name="password" type="TEXT">
@@ -23,43 +23,97 @@
             </column>
         </createTable>
 
-        <createTable  tableName="accounts">
+        <createTable tableName="hosts">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="firstname" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastname" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hostemail" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hostphone" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hostlogin" type="TEXT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+
+        <createTable  tableName="abouthosts">
             <column  name="id"  type="BIGINT" autoIncrement="true">
                 <constraints  nullable="false"  primaryKey="true"/>
             </column>
-            <column  name="account_nr"  type="TEXT">
-                <constraints  nullable="false" unique="true"/>
+            <column  name="service"  type="TEXT">
+                <constraints  nullable="false"/>
             </column>
-            <column  name="balance"  type="NUMERIC">
-                <constraints  nullable="true"/>
+            <column  name="address"  type="TEXT">
+                <constraints  nullable="false"/>
             </column>
-            <column  name="customer_id"  type="BIGINT">
-                <constraints  nullable="false" unique="false" foreignKeyName="fk_accounts_customer" references="customer(id)"/>
+            <column name="address_type" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="host_id"  type="BIGINT">
+                <constraints  nullable="false" unique="false"
+                              foreignKeyName="fk_abouthosts_hosts" references="hosts(id)"/>
             </column>
         </createTable>
 
 
     </changeSet>
 
-    <changeSet id="2020-09-05" author="Jevgeni">
-        <createTable  tableName="transactions">
+    <changeSet author="Jevgeni" id="2020-09-15">
+        <createTable  tableName="services">
             <column  name="id"  type="BIGINT" autoIncrement="true">
                 <constraints  nullable="false"  primaryKey="true"/>
             </column>
-            <column name="account_id" type="BIGINT">
-                <constraints foreignKeyName="fk_transactions_accounts" references="accounts(id)"/>
+            <column  name="service_name"  type="TEXT">
+                <constraints  nullable="false"/>
             </column>
-            <column  name="account"  type="TEXT">
-                <constraints  nullable="false" unique="false"/>
+            <column  name="service_description"  type="TEXT">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="service_duration"  type="TEXT">
+                <constraints  nullable="true"/>
+            </column>
+            <column  name="service_price"  type="numeric">
+                <constraints  nullable="true"/>
+            </column>
+            <column  name="payment_method"  type="text">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="room_type"  type="text">
+                <constraints  nullable="false"/>
+            </column>
+            <column  name="location"  type="text">
+                <constraints  nullable="false"/>
+            </column>
+            <column name="host_id" type="BIGINT">
+                <constraints foreignKeyName="fk_services_hosts" references="hosts(id)"/>
             </column>
 
-            <column  name="deposit"  type="numeric">
-                <constraints  nullable="true" unique="false"/>
+        </createTable>
+    </changeSet>
+
+
+    <changeSet author="Jevgeni" id="2020-09-16">
+        <createTable  tableName="all_services">
+            <column  name="id"  type="BIGINT" autoIncrement="true">
+                <constraints  nullable="false"  primaryKey="true"/>
             </column>
-            <column  name="withdraw"  type="numeric">
-                <constraints  nullable="true" unique="false"/>
+            <column  name="service_name"  type="TEXT">
+                <constraints  nullable="false"/>
             </column>
-            <column  name="balance"  type="numeric">
+            <column  name="service_duration"  type="TEXT">
+                <constraints  nullable="true"/>
             </column>
 
         </createTable>

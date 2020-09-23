@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Host Register</title>
+    <!-- Mobile Specific Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Font-->
+    <link rel="stylesheet" type="text/css" href="css/roboto-font.css">
+    <link rel="stylesheet" type="text/css" href="fonts/line-awesome/css/line-awesome.min.css">
+    <!-- Jquery -->
+    <link rel="stylesheet" href="https://jqueryvalidation.org/files/demo/site-demos.css">
+    <!-- Main Style Css -->
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body class="form-v2">
+<div class="page-content">
+    <div class="form-v2-content">
+        <div class="form-left">
+            <img src="images/register_host_image.jpg" alt="form">
+            <div class="text-1">
+                <p>REGISTER ME AS a HOST</p>
+            </div>
+            <div class="text-2">
+                <p><span>join</span>Now</p>
+            </div>
+        </div>
+        <form class="form-detail" action="#" method="post" id="myform">
+            <h2>Registration Form</h2>
+            <div class="form-row">
+                <label for="firstName">First Name:</label>
+                <input type="text" name="firstName" id="firstName" class="input-text">
+            </div>
+            <div class="form-row">
+                <label for="lastName">Last Name:</label>
+                <input type="text" name="lastName" id="lastName" class="input-text">
+            </div>
+            <div class="form-row">
+                <label for="hostEmail">Email:</label>
+                <input type="text" name="hostEmail" id="hostEmail" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+            </div>
+            <div class="form-row">
+                <label for="hostPhone">Phone:</label>
+                <input type="text" name="hostPhone" id="hostPhone" class="input-text" placeholder="372XXXXXXX">
+            </div>
+            <div class="form-row">
+                <label for="hostUserName">Username:</label>
+                <input type="text" name="hostUserName" id="hostUserName" class="input-text">
+            </div>
+            <div class="form-row">
+                <label for="hostPassword">Password:</label>
+                <input type="password" name="hostPassword" id="hostPassword" class="input-text" required>
+            </div>
+            <div class="form-row">
+                <label for="confirmHostPassword">Confirm Password:</label>
+                <input type="password" name="confirmHostPassword" id="confirmHostPassword" class="input-text" required>
+            </div>
+            <div class="form-row-last">
+                <input type="submit" name="register" id="register" class="register" value="Register">
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+<script>
+    // just for the demos, avoids form submit
+    jQuery.validator.setDefaults({
+        debug: true,
+        success:  function(label){
+            label.attr('id', 'valid');
+        },
+    });
+    $( "#myform" ).validate({
+        rules: {
+            password: "required",
+            confirm_password: {
+                equalTo: "#password"
+            }
+        },
+        messages: {
+            full_name: {
+                required: "Please provide an username"
+            },
+            your_email: {
+                required: "Please provide an email"
+            },
+            password: {
+                required: "Please provide a password"
+            },
+            confirm_password: {
+                required: "Please provide a password",
+                equalTo: "Wrong Password"
+            }
+        }
+    });
+
+
+    // Registers new host
+    let registerButton = document.getElementById("register")
+    registerButton.addEventListener('click', function createHost() {
+
+        fetch('/register_new_host', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                hostName: firstName.value,
+                hostLastName: lastName.value,
+                hostEmail: hostEmail.value,
+                hostPhone: hostPhone.value,
+                hostLogin: hostUserName.value,
+                hostPassword: hostPassword.value
+
+            })
+        })
+
+            .then(function (response) {
+                registerButton.value = 'Registered';
+                firstName.value = ' ';
+                lastName.value = ' ';
+                hostEmail.value = ' ';
+                hostPhone.value = ' ';
+                hostUserName.value = ' ';
+                hostPassword.value = ' ';
+            })
+
+            .catch(function (err) {
+                alert('User with such name or login already exists');
+            });
+
+    });
+
+
+</script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>

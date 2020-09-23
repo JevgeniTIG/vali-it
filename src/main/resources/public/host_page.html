@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Host Page</title>
+    <link rel="stylesheet" href="styles.css">
+
+
+</head>
+<body>
+
+<div class="header">
+    <br><img src="logo.png" alt="logo"/></div>
+    <br class="navigation">
+    <br><span style="padding-left:800px"></span>
+    <a id="welcome_host_by_name"></a></br>
+    <br><span style="padding-left:800px"></span>
+    <a><button onclick="location.href='index.html'">Log out</button></a></br>
+</div>
+<!Welcomes customer>
+<span id="helloMessage"></span>
+
+<h4></h4>
+
+<div>
+
+</div>
+<button id="showMyServicesButton" onclick="location.href='my_services.html'">My Services</button>
+<div><img src="pic_carousel_1.jpg" ></div>
+<div id="showMyServices"></div>
+</body>
+
+<script>
+    fetch('/welcome_host', {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (jsonData) {
+            var html = '<span>';
+            for (var i = 0; i < jsonData.length; ++i) {
+                var item = jsonData[i];
+                html += item.hostName;
+                html += ' ';
+                html += item.hostLastName;
+                html += '!';
+            }
+            html += '</span>'
+            helloMessage.innerHTML = 'Welcome, ' + html;
+
+        })
+
+
+        .catch(function (err) {
+            console.log(err);
+            alert('oops');
+        });
+
+
+</script>
+</html>

@@ -2,28 +2,124 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Mad Rabbit Bank</title>
+    <title>Beauty</title>
     <link rel="stylesheet" href="styles.css">
 
 
 </head>
 <body>
-    <img src="mrb_header.jpg" width="1200" height="120">
-    <h5>
-    </h5>
-    <!Sign in>
-<form method="POST" action="login">
-    <br><input type="" id="username" name="username" placeholder="Login"></br>
-    <br><input type="password" id="password" name="password" placeholder="Password"></br>
-    <br><input class="button-function" type="submit" id="loginButton" value="Log in"></form></br>
+<div class="header">
+    <br><img src="logo.png" alt="logo"/></br>
+    <br class="navigation">
 
-</form>
-    <h5>
-    </h5>
+    <a>
+        <button onclick="location.href='host_register_page.html'">Become a host</button>
+    </a>
+    <a>
+        <button onclick="location.href='user_page.html'">Sign in</button>
+    </a>
 
+    <a>
+        <button onclick="location.href='host_login_page.html'">Sign in as host</button>
+    </a>
+    <a>
+        <button onclick="location.href='user_register_page.html'">Sign up</button>
+    </a>
+
+</div>
+<div id="suitableServices"></div>
+
+<table>
+    <tr>
+        <td>
+            <select name="serviceLocation" id="serviceLocation">
+                <option value="Location">&nbsp--LOCATION--&nbsp</option>
+                <option value="Downtown">&nbspDowntown&nbsp</option>
+                <option value="Oldtown">&nbspOldtown&nbsp</option>
+                <option value="Pirita">&nbspPirita&nbsp</option>
+            </select>
+        </td>
+        <td>
+            <select name="service" id="service">
+                <option value="Service">&nbsp--SERVICE--&nbsp</option>
+                <option value="Massage">&nbspMassage&nbsp</option>
+                <option value="Haircut">&nbspHaircut&nbsp</option>
+                <option value="NailCare">&nbspNailCare&nbsp</option>
+            </select>
+        </td>
+        <td>
+            <select name="price" id="price">
+                <option value="MaxPrice">&nbsp--MAX PRICE--&nbsp</option>
+                <option value="10">&nbsp10&nbsp</option>
+                <option value="20">&nbsp20&nbsp</option>
+                <option value="30">&nbsp30&nbsp</option>
+            </select>
+        </td>
+
+        <td><input type="button" id="show_services" value="Show"></td>
+
+    </tr>
+</table>
+
+<div><img src="pic_carousel_1.jpg"></div>
 </body>
 
 <script>
+
+    let showButton = document.getElementById("show_services")
+    showButton.addEventListener('click', function filterServices() {
+        fetch('/show_suitable_services?serviceAddress=' + serviceLocation.value + '&serviceName=' + service.value + '&servicePrice=' + price.value,{
+            method: 'GET',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+            })
+
+
+            .then(function (response) {
+                return response.json();
+            })
+
+            .then(function (jsonData) {
+
+                var html = '<table>';
+                html += '<tr>';
+                html += '<td><b>NAME</b></td>';
+                html += '<td><b>DESCRIPTION</b></td>';
+                html += '<td><b>DURATION</b></td>';
+                html += '<td><b>PRICE</b></td>';
+                html += '<td><b>PAYMENT METHOD</b></td>';
+                html += '<td><b>ROOM TYPE</b></td>';
+                html += '<td><b>LOCATION</b></td>';
+                html += '<td><b></b></td>';
+                html += '</tr>';
+
+                for (var i = 0; i < jsonData.length; ++i) {
+                    var item = jsonData[i];
+
+                    html += '<tr>';
+                    html += '<td>' + item.serviceFullName + '</td>';
+                    html += '<td>' + item.serviceDescription + '</td>';
+                    html += '<td>' + item.serviceDuration + '</td>';
+                    html += '<td>' + item.servicePrice + '</td>';
+                    html += '<td>' + item.servicePaymentMethod + '</td>';
+                    html += '<td>' + item.serviceRoomType + '</td>';
+                    html += '<td>' + item.serviceAddress + '</td>';
+                    html += '</tr>';
+
+
+                }
+                html += '</table>';
+                suitableServices.innerHTML = html;
+
+
+            })
+            .catch(function (err) {
+                alert('Error');
+
+            })
+    });
 
 
 </script>

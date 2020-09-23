@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Service Page</title>
+
+</head>
+<body>
+<table>
+    <br><span style="padding-left:800px"></span>
+    <a>
+        <button onclick="location.href='index.html'">Log out</button>
+    </a></br>
+
+    <!Welcomes customer>
+    <span id="helloMessage"></span>
+
+    <tr>
+        <td>
+            <label for="service">Service:</label>
+            <select name="service" id="service">
+                <option value="choose">&nbsp--Choose--&nbsp</option>
+                <option value="Massage">&nbspMassage&nbsp</option>
+                <option value="Haircut">&nbspHaircut&nbsp</option>
+                <option value="Nailcare">&nbspNailCare&nbsp</option>
+            </select>
+        </td>
+
+        <td>
+            <label for="serviceDescription">Service Description:</label>
+            <select name="serviceDescription" id="serviceDescription">;
+                <option value="Oil Massage">&nbspOil Massage&nbsp</option>
+                <option value="Thai Massage">&nbspThai Massage&nbsp</option>
+                <option value="Classic Massage">&nbspClassic Massage&nbsp</option>
+                <option value="Men Haircut">&nbspMen Haircut&nbsp</option>
+                <option value="Women Haircut">&nbspWomen Haircut&nbsp</option>
+                <option value="Kids Haircut">&nbspKids Haircut&nbsp</option>
+                <option value="Nail Polishing">&nbspPolishing NailCare&nbsp</option>
+                <option value="Nail Colouring">&nbspColouring NailCare&nbsp</option>
+
+
+            </select>
+        </td>
+
+        <td>
+            <label for="duration">Duration:</label>
+            <select name="duration" id="duration">
+                <option value="30min">&nbsp30 min&nbsp</option>
+                <option value="45min">&nbsp45 min&nbsp</option>
+                <option value="60min">&nbsp60 min&nbsp</option>
+            </select>
+        </td>
+        <td>
+            <label for="price">Price €:</label>
+            <input type="numeric" name="price" id="price">
+        </td>
+        <td>
+            <label for="paymentMethod">Payment Method:</label>
+            <select name="paymentMethod" id="paymentMethod">
+                <option value="Cash">&nbspCash&nbsp</option>
+                <option value="Card">&nbspCard&nbsp</option>
+                <option value="Card & Cash">&nbspCard & Cash&nbsp</option>
+            </select>
+        </td>
+        <td>
+            <label for="roomType">Room Type:</label>
+            <select name="roomType" id="roomType">
+                <option value="Beauty Salon">&nbspBeauty Salon&nbsp</option>
+                <option value="Own Apartment">&nbspOwn Apartment&nbsp</option>
+            </select>
+        </td>
+        <td>
+            <label for="roomLocation">Location:</label>
+            <!address name="serviceLocation" id="serviceLocation">
+            <input type="text" id="roomLocation">
+            <!/address>
+        </td>
+    </tr>
+    <tr>
+        <td><input type="button" id="add_new_service" value="Add new"></td>
+    </tr>
+
+
+</table>
+<h5></h5>
+<div id="addedMessage"></div>
+<div id="serviceAdded"></div>
+
+</body>
+<script>
+
+    (function() {
+        const select = document.getElementsByName('serviceDescription'); //querySelectorAll('serviceDescription');
+        const options = Array.from(select[0].options);
+        const input = document.getElementById('service');
+        function findMatches (search, options) {
+            return options.filter(option => {
+                const regex = new RegExp(search, "gi");
+                return option.text.match(regex);
+            });
+        }
+        function filterOptions () {
+            options.forEach(option => {
+                option.remove();
+                option.selected = false;
+            });
+            const matchArray = findMatches(this.value, options);
+            select[0].append(...matchArray);
+        }
+        input.addEventListener('change', filterOptions);
+        //input.addEventListener('mouseup', filterOptions);
+
+    })();
+
+
+
+
+    // Adds new service into table 'services'
+    let addButton = document.getElementById("add_new_service")
+    addButton.addEventListener('click', function addService() {
+
+        fetch('/add_service', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify({
+
+                serviceName: service.value,
+                serviceDescription: serviceDescription.value,
+                serviceDuration: duration.value,
+                servicePrice: price.value,
+                servicePaymentMethod: paymentMethod.value,
+                serviceRoomType: roomType.value,
+                serviceAddress: roomLocation.value,
+
+            })
+        })
+
+            .then(function (response) {
+                addButton.value = 'Add';
+
+                price.value = ' ';
+                roomLocation.value = ' ';
+
+
+            })
+
+            .catch(function (err) {
+                alert('Something went wrong');
+            });
+
+    });
+
+
+    addButton.addEventListener('click', function showJustAddedService() {
+        var html = '<table>';
+        html += '<tr>';
+        html += '<td><b>SERVICE</b></td>';
+        html += '<td><b>DESCRIPTION</b></td>';
+        html += '<td><b>DURATION</b></td>';
+        html += '<td><b>PRICE</b></td>';
+        html += '<td><b>PAYMENT METHOD</b></td>';
+        html += '<td><b>ROOM TYPE</b></td>';
+        html += '<td><b>LOCATION</b></td>';
+        html += '<td><b></b></td>';
+        html += '<td><b></b></td>';
+        html += '</tr>';
+        html += '<tr>';
+        html += '<td><b>' + service.value + '</b></td>';
+        html += '<td><b>' + serviceDescription.value + '</b></td>';
+        html += '<td><b>' + duration.value + '</b></td>';
+        html += '<td><b>' + price.value + '</b></td>';
+        html += '<td><b>' + paymentMethod.value + '</b></td>';
+        html += '<td><b>' + roomType.value + '</b></td>';
+        html += '<td><b>' + roomLocation.value + '</b></td>';
+        html += '<td><b></b></td>';
+        html += '<td><b></b></td>';
+        html += '</tr>';
+        html += '</table>';
+        addedMessage.innerHTML = "You just created a new service";
+        serviceAdded.innerHTML = html;
+
+    })
+
+
+    fetch('/welcome_host', {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (jsonData) {
+            var html = '<span>';
+            for (var i = 0; i < jsonData.length; ++i) {
+                var item = jsonData[i];
+                html += item.hostName;
+                html += ' ';
+                html += item.hostLastName;
+                html += '!';
+            }
+            html += '</span>'
+            helloMessage.innerHTML = 'Welcome, ' + html;
+
+        })
+
+
+        .catch(function (err) {
+            console.log(err);
+            alert('oops');
+        });
+
+
+</script>
+</html>
