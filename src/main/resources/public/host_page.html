@@ -8,26 +8,31 @@
 
 </head>
 <body>
-
 <div class="header">
-    <br><img src="logo.png" alt="logo"/></div>
-    <br class="navigation">
-    <br><span style="padding-left:800px"></span>
-    <a id="welcome_host_by_name"></a></br>
-    <br><span style="padding-left:800px"></span>
-    <a><button onclick="location.href='index.html'">Log out</button></a></br>
+    <img src="logo.png" alt="logo"/>
+    <div class="header-right">
+        <!Welcomes customer>
+        <div id="helloMessage"></div>
+        <button id="hostButton1" onclick="location.href='index.html'">Log out</button>
+        <button id="showMyServicesButton" onclick="location.href='my_services.html'">My Services</button>
+    </div>
 </div>
-<!Welcomes customer>
-<span id="helloMessage"></span>
 
-<h4></h4>
 
-<div>
-
+<div class="container">
+    <img src="images/host_page_background.jpg" >
+    <div class="overlay">
+        <pre>
+            I want to break free
+            I want to break free
+            I want to break free from your lies
+            You're so self satisfied I don't need you
+            I've got to break free
+            God knows, God knows I want to break free
+        </pre>
+    </div>
 </div>
-<button id="showMyServicesButton" onclick="location.href='my_services.html'">My Services</button>
-<div><img src="pic_carousel_1.jpg" ></div>
-<div id="showMyServices"></div>
+
 </body>
 
 <script>

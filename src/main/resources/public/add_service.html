@@ -3,88 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <title>Add Service Page</title>
+    <link rel="stylesheet" href="styles.css">
 
 </head>
 <body>
-<table>
-    <br><span style="padding-left:800px"></span>
-    <a>
-        <button onclick="location.href='index.html'">Log out</button>
-    </a></br>
+<div class="header">
+    <img src="logo.png" alt="logo"/>
+    <div class="header-right">
+        <!Welcomes customer>
+        <div id="helloMessage"></div>
+        <button id="hostButton1" onclick="location.href='index.html'">Log out</button>
+        <button id="showMyServicesButton" onclick="location.href='my_services.html'">My Services</button>
+    </div>
+</div>
+<div class="container_addService">
+    <img src="images/add_service_page_background.jpg" >
+    <div class="overlay_picture_addService" id="addServiceTable">
+        <table class="addServiceTable">
+            <tr>
+                <td>
+                    <label for="chooseFromServices">Service:</label>
+                    <select class="select_add_service_choose" name="service" id="chooseFromServices">
+                        <option value="Choose">&nbspChoose&nbsp</option>
+                        <option value="Massage">&nbspMassage&nbsp</option>
+                        <option value="Haircut">&nbspHaircut&nbsp</option>
+                        <option value="Nailcare">&nbspNailCare&nbsp</option>
+                    </select>
+                </td>
 
-    <!Welcomes customer>
-    <span id="helloMessage"></span>
+                <td>
+                    <label for="serviceDescription">Service Description:</label>
+                    <select class="select_add_service_description" name="serviceDescription" id="serviceDescription">;
+                        <option value="Oil Massage">&nbspOil Massage&nbsp</option>
+                        <option value="Thai Massage">&nbspThai Massage&nbsp</option>
+                        <option value="Classic Massage">&nbspClassic Massage&nbsp</option>
+                        <option value="Men Haircut">&nbspMen Haircut&nbsp</option>
+                        <option value="Women Haircut">&nbspWomen Haircut&nbsp</option>
+                        <option value="Kids Haircut">&nbspKids Haircut&nbsp</option>
+                        <option value="Nail Polishing">&nbspPolishing NailCare&nbsp</option>
+                        <option value="Nail Colouring">&nbspColouring NailCare&nbsp</option>
+                    </select>
+                </td>
 
-    <tr>
-        <td>
-            <label for="service">Service:</label>
-            <select name="service" id="service">
-                <option value="choose">&nbsp--Choose--&nbsp</option>
-                <option value="Massage">&nbspMassage&nbsp</option>
-                <option value="Haircut">&nbspHaircut&nbsp</option>
-                <option value="Nailcare">&nbspNailCare&nbsp</option>
-            </select>
-        </td>
-
-        <td>
-            <label for="serviceDescription">Service Description:</label>
-            <select name="serviceDescription" id="serviceDescription">;
-                <option value="Oil Massage">&nbspOil Massage&nbsp</option>
-                <option value="Thai Massage">&nbspThai Massage&nbsp</option>
-                <option value="Classic Massage">&nbspClassic Massage&nbsp</option>
-                <option value="Men Haircut">&nbspMen Haircut&nbsp</option>
-                <option value="Women Haircut">&nbspWomen Haircut&nbsp</option>
-                <option value="Kids Haircut">&nbspKids Haircut&nbsp</option>
-                <option value="Nail Polishing">&nbspPolishing NailCare&nbsp</option>
-                <option value="Nail Colouring">&nbspColouring NailCare&nbsp</option>
-
-
-            </select>
-        </td>
-
-        <td>
-            <label for="duration">Duration:</label>
-            <select name="duration" id="duration">
-                <option value="30min">&nbsp30 min&nbsp</option>
-                <option value="45min">&nbsp45 min&nbsp</option>
-                <option value="60min">&nbsp60 min&nbsp</option>
-            </select>
-        </td>
-        <td>
-            <label for="price">Price €:</label>
-            <input type="numeric" name="price" id="price">
-        </td>
-        <td>
-            <label for="paymentMethod">Payment Method:</label>
-            <select name="paymentMethod" id="paymentMethod">
-                <option value="Cash">&nbspCash&nbsp</option>
-                <option value="Card">&nbspCard&nbsp</option>
-                <option value="Card & Cash">&nbspCard & Cash&nbsp</option>
-            </select>
-        </td>
-        <td>
-            <label for="roomType">Room Type:</label>
-            <select name="roomType" id="roomType">
-                <option value="Beauty Salon">&nbspBeauty Salon&nbsp</option>
-                <option value="Own Apartment">&nbspOwn Apartment&nbsp</option>
-            </select>
-        </td>
-        <td>
-            <label for="roomLocation">Location:</label>
-            <!address name="serviceLocation" id="serviceLocation">
-            <input type="text" id="roomLocation">
-            <!/address>
-        </td>
-    </tr>
-    <tr>
-        <td><input type="button" id="add_new_service" value="Add new"></td>
-    </tr>
+                <td>
+                    <label for="duration">Duration:</label>
+                    <select class="select_add_service_duration" name="duration" id="duration">
+                        <option value="30min">&nbsp30 min&nbsp</option>
+                        <option value="45min">&nbsp45 min&nbsp</option>
+                        <option value="60min">&nbsp60 min&nbsp</option>
+                    </select>
+                </td>
+                <td>
+                    <label for="addPrice" id="addPriceLabel">Price €:</label>
+                    <input class="add_service_input_price" type="numeric" name="addPrice" id="addPrice">
+                </td>
+                <td>
+                    <label for="paymentMethod">Payment Method:</label>
+                    <select class="select_add_service_payment_method" name="paymentMethod" id="paymentMethod">
+                        <option value="Cash">&nbspCash&nbsp</option>
+                        <option value="Card">&nbspCard&nbsp</option>
+                        <option value="Card & Cash">&nbspCard & Cash&nbsp</option>
+                    </select>
+                </td>
+                <td>
+                    <label for="roomType">Room Type:</label>
+                    <select class="select_add_service_room_type" name="roomType" id="roomType">
+                        <option value="Beauty Salon">&nbspBeauty Salon&nbsp</option>
+                        <option value="Own Apartment">&nbspOwn Apartment&nbsp</option>
+                    </select>
+                </td>
+                <td>
+                    <label for="roomLocation" id="addLocationLabel">Location:</label>
+                    <input class="add_service_input_location" type="text" id="roomLocation">
+                </td>
+                <td><input type="image" align="center" src="images/add_button.png"
+                           onmouseover="this.src='images/add_button_active.png'"
+                           onmouseout="this.src='images/add_button.png'"
+                           id="add_new_service" href="#suitableService">
+                </td>
+            </tr>
+        </table>
+        <div id="addedMessage"></div>
+        <div id="serviceAdded"></div>
+    </div>
+</div>
 
 
-</table>
-<h5></h5>
-<div id="addedMessage"></div>
-<div id="serviceAdded"></div>
 
 </body>
 <script>
@@ -92,7 +96,7 @@
     (function() {
         const select = document.getElementsByName('serviceDescription'); //querySelectorAll('serviceDescription');
         const options = Array.from(select[0].options);
-        const input = document.getElementById('service');
+        const input = document.getElementById('chooseFromServices');
         function findMatches (search, options) {
             return options.filter(option => {
                 const regex = new RegExp(search, "gi");
@@ -127,11 +131,10 @@
             },
 
             body: JSON.stringify({
-
-                serviceName: service.value,
+                serviceName: chooseFromServices.value,
                 serviceDescription: serviceDescription.value,
                 serviceDuration: duration.value,
-                servicePrice: price.value,
+                servicePrice: addPrice.value,
                 servicePaymentMethod: paymentMethod.value,
                 serviceRoomType: roomType.value,
                 serviceAddress: roomLocation.value,
@@ -140,11 +143,9 @@
         })
 
             .then(function (response) {
-                addButton.value = 'Add';
 
-                price.value = ' ';
+                addPrice.value = ' ';
                 roomLocation.value = ' ';
-
 
             })
 
@@ -156,32 +157,37 @@
 
 
     addButton.addEventListener('click', function showJustAddedService() {
-        var html = '<table>';
-        html += '<tr>';
-        html += '<td><b>SERVICE</b></td>';
-        html += '<td><b>DESCRIPTION</b></td>';
-        html += '<td><b>DURATION</b></td>';
-        html += '<td><b>PRICE</b></td>';
-        html += '<td><b>PAYMENT METHOD</b></td>';
-        html += '<td><b>ROOM TYPE</b></td>';
-        html += '<td><b>LOCATION</b></td>';
-        html += '<td><b></b></td>';
-        html += '<td><b></b></td>';
-        html += '</tr>';
-        html += '<tr>';
-        html += '<td><b>' + service.value + '</b></td>';
-        html += '<td><b>' + serviceDescription.value + '</b></td>';
-        html += '<td><b>' + duration.value + '</b></td>';
-        html += '<td><b>' + price.value + '</b></td>';
-        html += '<td><b>' + paymentMethod.value + '</b></td>';
-        html += '<td><b>' + roomType.value + '</b></td>';
-        html += '<td><b>' + roomLocation.value + '</b></td>';
-        html += '<td><b></b></td>';
-        html += '<td><b></b></td>';
-        html += '</tr>';
-        html += '</table>';
-        addedMessage.innerHTML = "You just created a new service";
-        serviceAdded.innerHTML = html;
+        if(chooseFromServices.value != 'Choose' && addPrice.value != 0 && roomLocation.value != '') {
+            var html = '<table class="justAddedService">';
+            html += '<tr>';
+            html += '<td><b>SERVICE</b></td>';
+            html += '<td><b>DESCRIPTION</b></td>';
+            html += '<td><b>DURATION</b></td>';
+            html += '<td><b>PRICE</b></td>';
+            html += '<td><b>PAYMENT METHOD</b></td>';
+            html += '<td><b>ROOM TYPE</b></td>';
+            html += '<td><b>LOCATION</b></td>';
+            html += '<td><b></b></td>';
+            html += '<td><b></b></td>';
+            html += '</tr>';
+            html += '<tr>';
+            html += '<td><b>' + chooseFromServices.value + '</b></td>';
+            html += '<td><b>' + serviceDescription.value + '</b></td>';
+            html += '<td><b>' + duration.value + '</b></td>';
+            html += '<td><b>' + addPrice.value + '</b></td>';
+            html += '<td><b>' + paymentMethod.value + '</b></td>';
+            html += '<td><b>' + roomType.value + '</b></td>';
+            html += '<td><b>' + roomLocation.value + '</b></td>';
+            html += '<td><b></b></td>';
+            html += '<td><b></b></td>';
+            html += '</tr>';
+            html += '</table>';
+            serviceAdded.innerHTML = html;
+
+        }
+        else{
+            alert('Please fill all necessary fields');
+        }
 
     })
 

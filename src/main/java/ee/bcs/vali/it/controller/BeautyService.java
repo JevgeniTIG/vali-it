@@ -3,6 +3,7 @@ package ee.bcs.vali.it.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -42,8 +43,10 @@ public class BeautyService {
     //Adds services into table 'services'
     public void addService(String currentHostLogin, String serviceName, String serviceDescription, String serviceDuration, BigDecimal servicePrice, String servicePaymentMethod,
                            String serviceRoomType, String serviceAddress) {
-        beautyRepository.addService(currentHostLogin, serviceName, serviceDescription, serviceDuration, servicePrice, servicePaymentMethod,
-                serviceRoomType, serviceAddress);
+        if (!(serviceName.equals("Choose")) && servicePrice != null && !StringUtils.isEmpty(serviceAddress)){
+            beautyRepository.addService(currentHostLogin, serviceName, serviceDescription, serviceDuration, servicePrice, servicePaymentMethod,
+                    serviceRoomType, serviceAddress);
+        }
     }
 
 

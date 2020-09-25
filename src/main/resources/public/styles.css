@@ -1,23 +1,364 @@
+/*table, td {padding: 10px;}*/
+table {border-spacing: 10px; color: white; background-color: #34def7; border-radius: 30px;}
 
-table, td {padding: 10px;}
-table {border-spacing: 10px; background-color: #fff7fa;}
-button {color: #df2161; border-color: #df2161; background-color: white; border-radius: 2px; .button: hover;}
+/*index.html*/
+
+/*container*/
+.container {
+    position: relative;
+}
+
+.overlay {
+    position: absolute;
+    top: 300px;
+    left: 50px;
+}
+/*Search Form*/
+.myTableFormatSearch {
+    font-size: 30px;}
+.myTableFormatSearchResults{
+    border-spacing: 10px;
+    color: #df2161;
+    background-color: transparent;
+}
+.firstTr{
+    border-spacing: 10px;
+    color: #df2161;
+}
+/*select sections in the table myTableFormatSearch*/
+select {
+    -moz-appearance: none;
+    -webkit-appearance:none;
+    width: 120px;
+    margin: 10px;
+    color: white;
+    background-color: #34def7;
+    font-size: 14px;
+    outline:none;
+}
+select:active{
+    background-color: #34def7;
+    border-radius: 30px;
+    border: none;
+    border-style: outset;
+}
+#serviceLocation{
+    border: none;
+    color: white;
+}
+#service{
+    border: none;
+    color: white;
+}
+#price{
+    border: none;
+    color: white;
+}
+#show_services {
+    width: 40px;
+    height: 40px;
+    background: none;
+    outline: none;
+}
+#show_services:hover {
+    width: 40px;
+    height: 40px;
+    background: none;
+    outline: none;
+}
+#show_services:active{
+    border-style: outset;
+    border: none;
+}
+/*Buttons in the header section*/
+#hostButton1
+{color: white; border: hidden; background-color: #df2161; border-radius: 20px; outline: none}
+#hostButton1:hover {color: #df2161; border-color: #df2161; background-color: white; outline: none}
+#hostButton1:active{
+    border-style: outset;
+    border: none;
+}
+#hostButton2
+{color: white; border: hidden; background-color: #df2161; border-radius: 20px; outline: none}
+#hostButton2:hover {color: #df2161; border-color: #df2161; background-color: white; outline: none}
+#hostButton2:active{
+    border-style: outset;
+    border: none;
+}
+#userButton1
+{color: white; border: hidden; background-color: #34def7; border-radius: 20px; outline: none}
+#userButton1:hover {color: #34def7; border-color: #df2161; background-color: white; outline: none}
+#userButton1:active{
+    border-style: outset;
+    border: none;
+}
+#userButton2
+{color: white; border: hidden; background-color: #34def7; border-radius: 20px; outline: none}
+#userButton2:hover {color: #34def7; border-color: #df2161; background-color: white; outline: none}
+#userButton2:active{
+    border-style: outset;
+    border: none;
+}
+
+/*/////////////////////////////////////////////////////////////////////*/
+
+/*my_services.html*/
+/*container*/
+.container_myServicesTable {
+    position: relative;
+}
+
+.overlay_picture {
+    position: absolute;
+    top: 100px;
+    left: 50px;
+}
+/*Section that shows logged host services*/
+.myServicesTable {
+    border-spacing: 10px;
+    color: #494c4c;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: unset;
+}
+.firstTr_myServicesTable{
+    border-spacing: 10px;
+    color: #494c4c;
+}
+/*Button to navigate to add_service.html*/
+#addServicesButton
+{color: white; border: hidden; background-color: #34def7; border-radius: 20px; outline: none}
+#addServicesButton:hover {color: #34def7; border-color: #df2161; background-color: white; outline: none}
+#addServicesButton:active{
+    border-style: outset;
+    border: none;
+}
+/*Allows to delete services one by one on my_services.html*/
+#blueButton
+{color: white; border: hidden; background-color: #34def7; border-radius: 20px; outline: none}
+#blueButton:hover {color: #34def7; border-color: #df2161; background-color: white; outline: none}
+#blueButton:active{
+    border-style: outset;
+    border: none;
+}
+
+/*/////////////////////////////////////////////////////////////////////*/
+
+/*add_service.html*/
+/*container*/
+.container_addService {
+    position: relative;
+}
+.overlay_picture_addService {
+    position: absolute;
+    top: 100px;
+    left: 50px;
+    right: 50px;
+}
+/*add_service.html*/
+.addServiceTable {
+    border-radius: unset;
+    color: #494c4c;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+/*Form that allows host to add new service*/
+.select_add_service_choose{
+    float: left;
+    width: 100px;
+    color: #494c4c;
+    border: #494c4c;
+    background-color: rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+    outline:none;
+}
+.select_add_service_choose:active{
+    background-color: transparent;
+    border-radius: 30px;
+    color: #494c4c;
+    border: none;
+    border-style: outset;
+}
+.select_add_service_description{
+    width: 140px;
+    color: #494c4c;
+    border: #494c4c;
+    background-color: rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+    outline:none;
+}
+.select_add_service_description:active{
+    background-color: transparent;
+    border-radius: 30px;
+    color: #494c4c;
+    border: none;
+    border-style: outset;
+}
+.select_add_service_duration{
+    width: 80px;
+    color: #494c4c;
+    border: #494c4c;
+    background-color: rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+    outline:none;
+}
+.select_add_service_duration:active{
+    background-color: transparent;
+    border-radius: 30px;
+    color: #494c4c;
+    border: none;
+    border-style: outset;
+}
+.select_add_service_payment_method{
+    width: 100px;
+    color: #494c4c;
+    border: #494c4c;
+    background-color: rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+    outline:none;
+}
+.select_add_service_payment_method:active{
+    background-color: transparent;
+    border-radius: 30px;
+    color: #494c4c;
+    border: none;
+    border-style: outset;
+}
+.select_add_service_room_type{
+    width: 120px;
+    color: #494c4c;
+    border: #494c4c;
+    background-color: rgba(255, 255, 255, 0.1);
+    font-size: 14px;
+    outline:none;
+}
+.select_add_service_room_type:active{
+    background-color: transparent;
+    border-radius: 30px;
+    color: #494c4c;
+    border: none;
+    border-style: outset;
+}
+
+/*Label in add service section*/
+label {
+    display: block;
+    padding-left: 15px;
+    font-weight: bold;
+}
+#addPriceLabel{
+    display: block;
+    padding-left: 0;
+}
+#addLocationLabel{
+    display: block;
+    padding-left: 0;
+}
+
+.add_service_input_price{
+    width: 60px;
+    margin-top: 15px;
+    background-color: transparent;
+    border-color: #494c4c;
+    color: #494c4c;
+}
+
+.add_service_input_location{
+    width: 240px;
+    margin-top: 15px;
+    background-color: transparent;
+    border-color: #494c4c;
+    color: #494c4c;
+}
+/*Button to add a service*/
+#add_new_service {
+    width: 40px;
+    height: 40px;
+    background: none;
+    outline: none;
+}
+#add_new_service:hover {
+    width: 40px;
+    height: 40px;
+    background: none;
+    outline: none;
+}
+#add_new_service:active{
+    border-style: outset;
+    border: none;
+}
+/*Button to navigate to my_services.html*/
+#showMyServicesButton
+{color: white; border: hidden; background-color: #34def7; border-radius: 20px; outline: none}
+#showMyServicesButton:hover {color: #34def7; border-color: #df2161; background-color: white; outline: none}
+#showMyServicesButton:active{
+    border-style: outset;
+    border: none;
+}
+/*Section that shows just added service of a logged host*/
+.justAddedService {
+    color: white;
+    border-radius: unset;
+    background-color: rgba(73, 76, 76, 0.6);
+    font-weight: normal;
+}
+
+
 input {color: #df2161}
-select {width: 350px;margin: 10px;}
+
 img {
-    width: 80%;
+    width: 100%;
     height: auto;
+}
+
+/* Style the header with a transparent background and some padding */
+.header {
+    overflow: hidden;
+    background-color: transparent;
+    padding: 10px 10px;
+}
+
+/* Float the link section to the right */
+.header-right {
+    float: right;
 }
 
 .header img {
     float: left;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background: none
 }
-
 .header h1 {
     position: relative;
     top: 18px;
     left: 10px;
 }
+
+.div4 {
+    overflow: hidden;
+    color: black;
+    background-color: transparent;
+    padding: 200px 200px;
+
+}
+
+#helloMessage{
+    color: #df2161;
+}
+#addedMessage{
+    color: white;
+    font-size: large;
+}
+
+
+/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
+@media screen and (max-width: 500px) {
+    .header {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+    .header-right {
+        float: none;
+    }
+}
+

@@ -8,60 +8,67 @@
 
 </head>
 <body>
+
 <div class="header">
-    <br><img src="logo.png" alt="logo"/></br>
-    <br class="navigation">
+    <img src="logo.png" alt="logo"/>
+    <div class="header-right">
 
-    <a>
-        <button onclick="location.href='host_register_page.html'">Become a host</button>
-    </a>
-    <a>
-        <button onclick="location.href='user_page.html'">Sign in</button>
-    </a>
+        <button id="hostButton1" onclick="location.href='host_login_page.html'">Sign in as host</button>
+        <button id="hostButton2" onclick="location.href='host_register_page.html'">Become a host</button>
+        <p></p>
+        <button id="userButton1" onclick="location.href='user_page.html'">Sign in</button>
+        <button id="userButton2" onclick="location.href='user_register_page.html'">Sign up</button>
 
-    <a>
-        <button onclick="location.href='host_login_page.html'">Sign in as host</button>
-    </a>
-    <a>
-        <button onclick="location.href='user_register_page.html'">Sign up</button>
-    </a>
-
+    </div>
 </div>
+<div class="container">
+    <div class="content_selection_form">
+        <img src="images/pic.jpg">
+    </div>
+    <div class="overlay">
+        <table class="myTableFormatSearch">
+            <tr>
+                <td>
+                    <select name="serviceLocation" id="serviceLocation">
+                        <option value="Location">&nbspLOCATION&nbsp</option>
+                        <option value="Downtown">&nbspDowntown&nbsp</option>
+                        <option value="Oldtown">&nbspOldtown&nbsp</option>
+                        <option value="Pirita">&nbspPirita&nbsp</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="service" id="service">
+                        <option value="Service">&nbspSERVICE&nbsp</option>
+                        <option value="Massage">&nbspMassage&nbsp</option>
+                        <option value="Haircut">&nbspHaircut&nbsp</option>
+                        <option value="NailCare">&nbspNailCare&nbsp</option>
+                    </select>
+                </td>
+                <td>
+                    <select name="price" id="price">
+                        <option value="MaxPrice">&nbspMAX PRICE&nbsp</option>
+                        <option value="10">&nbsp10&nbsp</option>
+                        <option value="20">&nbsp20&nbsp</option>
+                        <option value="30">&nbsp30&nbsp</option>
+                    </select>
+                </td>
+
+                <td><input type="image" align="center" src="images/not_pressed_search.png"
+                           onmouseover="this.src='images/pressed_search.png'"
+                           onmouseout="this.src='images/not_pressed_search.png'"
+                           id="show_services" href="#suitableService"></td>
+
+            </tr>
+        </table>
+
+    </div>
+</div>
+
 <div id="suitableServices"></div>
 
-<table>
-    <tr>
-        <td>
-            <select name="serviceLocation" id="serviceLocation">
-                <option value="Location">&nbsp--LOCATION--&nbsp</option>
-                <option value="Downtown">&nbspDowntown&nbsp</option>
-                <option value="Oldtown">&nbspOldtown&nbsp</option>
-                <option value="Pirita">&nbspPirita&nbsp</option>
-            </select>
-        </td>
-        <td>
-            <select name="service" id="service">
-                <option value="Service">&nbsp--SERVICE--&nbsp</option>
-                <option value="Massage">&nbspMassage&nbsp</option>
-                <option value="Haircut">&nbspHaircut&nbsp</option>
-                <option value="NailCare">&nbspNailCare&nbsp</option>
-            </select>
-        </td>
-        <td>
-            <select name="price" id="price">
-                <option value="MaxPrice">&nbsp--MAX PRICE--&nbsp</option>
-                <option value="10">&nbsp10&nbsp</option>
-                <option value="20">&nbsp20&nbsp</option>
-                <option value="30">&nbsp30&nbsp</option>
-            </select>
-        </td>
 
-        <td><input type="button" id="show_services" value="Show"></td>
 
-    </tr>
-</table>
 
-<div><img src="pic_carousel_1.jpg"></div>
 </body>
 
 <script>
@@ -83,8 +90,8 @@
 
             .then(function (jsonData) {
 
-                var html = '<table>';
-                html += '<tr>';
+                var html = '<table class="myTableFormatSearchResults">';
+                html += '<tr class="firstTr">';
                 html += '<td><b>NAME</b></td>';
                 html += '<td><b>DESCRIPTION</b></td>';
                 html += '<td><b>DURATION</b></td>';
