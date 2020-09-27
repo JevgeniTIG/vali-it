@@ -1,5 +1,8 @@
 package ee.bcs.vali.it.controller;
 
+import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
+import com.maxmind.geoip2.model.CityResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -7,8 +10,11 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.InetAddress;
 import java.util.List;
 
 @Service
@@ -22,8 +28,8 @@ public class BeautyService {
 
 
     // Registers new user
-    public void registerUser(String userName, String userLastName, String userLogin, String userPassword) {
-        beautyRepository.registerUser(userName, userLastName, userLogin, passwordEncoder.encode(userPassword));
+    public void registerUser(String userName, String userLastName, String userEmail, String userPhone, String userLogin, String userPassword) {
+        beautyRepository.registerUser(userName, userLastName, userEmail, userPhone, userLogin, passwordEncoder.encode(userPassword));
     }
 
 
@@ -64,6 +70,11 @@ public class BeautyService {
         return passwordEncoder.encode(hostPassword);
     }
 
+    //Login as user
+    public String userLogin(String userPassword) {
+        return passwordEncoder.encode(userPassword);
+    }
+
     //Shows services of logged host
     public List showLoggedHostServices(String currentHostLogin) {
         return beautyRepository.showLoggedHostServices(currentHostLogin);
@@ -85,6 +96,7 @@ public class BeautyService {
     public BigInteger loggedHostId(String hostLogin) {
         return beautyRepository.loggedHostId(hostLogin);
     }
+
 
 
 }

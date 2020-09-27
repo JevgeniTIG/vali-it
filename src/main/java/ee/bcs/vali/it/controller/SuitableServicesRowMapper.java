@@ -12,6 +12,7 @@ public class SuitableServicesRowMapper implements RowMapper<ServiceData>{
     public ServiceData mapRow(ResultSet resultSet, int i) throws SQLException{
         ServiceData suitableServices = new ServiceData();
         suitableServices.setServiceName(resultSet.getString("service_name"));
+        suitableServices.setServiceRating(resultSet.getDouble("rating"));
         suitableServices.setServiceDescription(resultSet.getString("service_description"));
         suitableServices.setServiceDuration(resultSet.getString("service_duration"));
         suitableServices.setServicePrice(resultSet.getBigDecimal("service_price"));

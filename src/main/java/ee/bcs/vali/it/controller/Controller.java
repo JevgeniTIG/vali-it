@@ -1,11 +1,17 @@
 package ee.bcs.vali.it.controller;
 
+import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
+import com.maxmind.geoip2.model.CityResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.InetAddress;
 import java.security.Principal;
 import java.util.List;
 
@@ -19,8 +25,8 @@ public class Controller {
     //Posts new user to table 'users'
     @PostMapping("register_new_user")
     public void registerUser(@RequestBody UserData request) {
-        beautyService.registerUser(request.getUserName(), request.getUserLastName(),
-                request.getUserLogin(), request.getUserPassword());
+        beautyService.registerUser(request.getUserName(), request.getUserLastName(), request.getUserEmail(),
+                request.getUserPhone(), request.getUserLogin(), request.getUserPassword());
     }
 
 
@@ -70,6 +76,12 @@ public class Controller {
         return beautyService.hostLogin(request.getHostPassword());
     }
 
+    //Login of user
+    @PostMapping("userLogin")
+    public String userLogin(@RequestBody UserData request) {
+        return beautyService.userLogin(request.getUserPassword());
+    }
+
     //Shows services of logged host
     @PostMapping("show_logged_host_services")
     public List showLoggedHostServices(Principal principal) {
@@ -107,10 +119,6 @@ public class Controller {
     public BigInteger loggedHostId(Principal principal) {
         return beautyService.loggedHostId(principal.getName());
     }
-
-
-
-
 
 
 }

@@ -15,6 +15,12 @@
             <column name="lastname" type="TEXT">
                 <constraints nullable="false"/>
             </column>
+            <column name="useremail" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="userphone" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
             <column name="userlogin" type="TEXT">
                 <constraints nullable="false" unique="true"/>
             </column>
@@ -32,6 +38,9 @@
             </column>
             <column name="lastname" type="TEXT">
                 <constraints nullable="false"/>
+            </column>
+            <column name="rating" type="DOUBLE">
+                <constraints nullable="true"/>
             </column>
             <column name="hostemail" type="TEXT">
                 <constraints nullable="false"/>

@@ -93,6 +93,7 @@
                 var html = '<table class="myTableFormatSearchResults">';
                 html += '<tr class="firstTr">';
                 html += '<td><b>NAME</b></td>';
+                html += '<td><b>RATING</b></td>';
                 html += '<td><b>DESCRIPTION</b></td>';
                 html += '<td><b>DURATION</b></td>';
                 html += '<td><b>PRICE</b></td>';
@@ -107,6 +108,7 @@
 
                     html += '<tr>';
                     html += '<td>' + item.serviceFullName + '</td>';
+                    html += '<td>' + item.serviceRating + '</td>';
                     html += '<td>' + item.serviceDescription + '</td>';
                     html += '<td>' + item.serviceDuration + '</td>';
                     html += '<td>' + item.servicePrice + '</td>';

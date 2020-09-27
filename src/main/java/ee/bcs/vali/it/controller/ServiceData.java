@@ -16,8 +16,7 @@ public class ServiceData {
     private String serviceAddress;
     private BigInteger hostId;
     private String serviceFullName;
-
-
+    private double serviceRating;
 
 
     public BigInteger getServiceId() {
@@ -98,5 +97,13 @@ public class ServiceData {
 
     public void setServiceFullName(String serviceFullName) {
         this.serviceFullName = serviceFullName;
+    }
+
+    public double getServiceRating() {
+        return serviceRating;
+    }
+
+    public void setServiceRating(double serviceRating) {
+        this.serviceRating = serviceRating;
     }
 }

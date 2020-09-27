@@ -18,8 +18,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/styles.css", "/logo.png", "/images/**",
-                        "/pic_carousel_1.jpg", "/register_new_host", "/host_register_page.html",
-                        "/css/**", "/fonts/**", "/", "/add_service", "/show_logged_host_services",
+                        "/pic_carousel_1.jpg", "/register_new_host", "/host_register_page.html", "/register_new_user",
+                        "/user_register_page.html", "/css/**", "/fonts/**", "/", "/add_service", "/show_logged_host_services",
                         "/delete_service", "/show_suitable_services").permitAll()
                 .anyRequest().authenticated()
                 .and()

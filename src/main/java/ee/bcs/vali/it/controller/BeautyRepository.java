@@ -1,12 +1,18 @@
 package ee.bcs.vali.it.controller;
 
 import com.fasterxml.jackson.databind.node.BigIntegerNode;
+import com.maxmind.geoip2.DatabaseReader;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
+import com.maxmind.geoip2.model.CityResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,12 +25,15 @@ public class BeautyRepository {
     private NamedParameterJdbcTemplate dataBase;
 
     // Registers new user, adding data to 'users' table
-    public void registerUser(String userName, String userLastName, String userLogin, String userPassword) {
-        String sql = "INSERT INTO users(name, lastname, login, password) " +
-                "VALUES (:name, :lastname, :login, :password)";
+    public void registerUser(String userName, String userLastName, String userEmail, String userPhone,
+                             String userLogin, String userPassword) {
+        String sql = "INSERT INTO users(firstname, lastname, useremail, userphone, userlogin, password) " +
+                "VALUES (:firstname, :lastname, :useremail, :userphone, :userlogin, :password)";
         Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("name", userName);
+        paramMap.put("firstname", userName);
         paramMap.put("lastname", userLastName);
+        paramMap.put("useremail", userEmail);
+        paramMap.put("userphone", userPhone);
         paramMap.put("userlogin", userLogin);
         paramMap.put("password", userPassword);
         dataBase.update(sql, paramMap);
@@ -102,6 +111,14 @@ public class BeautyRepository {
         return dataBase.queryForObject(sql, paramMap, String.class);
     }
 
+    //Login as user
+    public String userLogin(String userLogin){
+        String sql ="SELECT password FROM users WHERE userlogin= :userlogin";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("userlogin", userLogin);
+        return dataBase.queryForObject(sql, paramMap, String.class);
+    }
+
 
     // Welcomes the host that is currently logged in
     public List welcomeHost(String hostLogin){
@@ -132,7 +149,7 @@ public class BeautyRepository {
     public List showSuitableServices(String serviceLocation, String serviceName, BigDecimal servicePrice){
 
 
-        String sql = "SELECT hosts.firstname || ' ' || hosts.lastname full_name, service_name, service_description, service_duration, service_price, " +
+        String sql = "SELECT hosts.firstname || ' ' || hosts.lastname full_name, hosts.rating, service_name, service_description, service_duration, service_price, " +
                 "payment_method, room_type, location FROM services join hosts on services.host_id= hosts.id WHERE location= :location AND " +
                 "service_price<= :service_price AND service_name= :service_name";
         Map<String, Object> paramMap = new HashMap<>();
@@ -149,6 +166,25 @@ public class BeautyRepository {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("hostlogin", hostLogin);
         return dataBase.queryForObject(sql, paramMap, BigInteger.class);
+    }
+
+    //Geolocation
+    public void givenIP_whenFetchingCity_thenReturnsCityData()
+            throws IOException, GeoIp2Exception {
+        String ip = "your-ip-address";
+        String dbLocation = "your-path-to-mmdb";
+
+        File database = new File(dbLocation);
+        DatabaseReader dbReader = new DatabaseReader.Builder(database)
+                .build();
+
+        InetAddress ipAddress = InetAddress.getByName(ip);
+        CityResponse response = dbReader.city(ipAddress);
+
+        String countryName = response.getCountry().getName();
+        String cityName = response.getCity().getName();
+        String postal = response.getPostal().getCode();
+        String state = response.getLeastSpecificSubdivision().getName();
     }
 
 
