@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Services History</title>
+    <link rel="stylesheet" href="styles.css">
+
+
+</head>
+<body onload="javascript:showRateServiceHost()">
+<div class="header">
+    <img src="logo.png" alt="logo"/>
+    <div class="header-right">
+        <!Welcomes customer>
+        <div id="helloMessage"></div>
+        <button id="hostButton1" onclick="location.href='index.html'">Log out</button>
+        <button id="showMyServicesHistoryButton" onclick="location.href='member_page.html'">Find Service</button>
+    </div>
+</div>
+
+<div id="checkMember"></div>
+
+
+<div class="container">
+    <img src="images/member_page_background.jpg" >
+    <div class="overlay">
+
+    <div id="servicesHistory"></div>
+    </div>
+</div>
+
+</body>
+
+<script>
+    var currentUser;
+    fetch('/welcome_host', {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (jsonData) {
+            var html = '<span>';
+            for (var i = 0; i < jsonData.length; ++i) {
+                var item = jsonData[i];
+                html += item.hostName;
+                html += ' ';
+                html += item.hostLastName;
+                html += '!';
+                currentUser = item.hostRole;
+            }
+            html += '</span>'
+            helloMessage.innerHTML = 'Welcome, ' + html;
+            checkMemberRole();
+        })
+
+
+        .catch(function (err) {
+            console.log(err);
+            alert('oops');
+        });
+
+    // Checks if currently logged member is also a host. If yes >>> changes interface and functionality of member_page.html
+    function checkMemberRole(){
+        if(currentUser == 'member'){
+            becomeHost();
+
+        }
+        else if(currentUser =='member and host'){
+            addNewService();
+            showMyServices();
+        }
+    }
+
+    // Adds a button 'Become a host'
+    function becomeHost(){
+        var button = document.createElement("button");
+        button.id = "hostButton1";
+        button.innerHTML = "Become a host";
+
+        var div = document.getElementsByTagName("div")[0];
+        div.appendChild(button);
+
+
+        button.addEventListener ("click", function common(){
+            location.href= "host_register_page.html"
+
+        });
+    }
+
+    // Adds a button 'Add Service'
+    function addNewService(){
+        var button = document.createElement("button");
+        button.id = "hostButton1";
+        button.innerHTML = "Add New Service";
+
+        var div = document.getElementsByTagName("div")[4];
+        div.appendChild(button);
+
+
+        button.addEventListener ("click", function common(){
+            location.href= "add_service.html"
+
+        });
+    }
+
+    // Adds a button 'Add Service'
+    function showMyServices(){
+        var button = document.createElement("button");
+        button.id = "hostButton1";
+        button.innerHTML = "My Services";
+
+        var div = document.getElementsByTagName("div")[2];
+        div.appendChild(button);
+
+
+        button.addEventListener ("click", function common(){
+            location.href= "my_services.html"
+
+        });
+    }
+
+
+    //Shows services history of logged member on the same page
+
+        fetch('/show_logged_member_services_history', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+            .then(function (response) {
+                return response.json();
+            })
+
+            .then(function (jsonData) {
+
+                var html = '<table class="myServicesHistoryTable">';
+                html += '<tr class="firstTr">';
+                html += '<td><b>NAME</b></td>';
+                html += '<td><b>RATING</b></td>';
+                html += '<td><b>DESCRIPTION</b></td>';
+                html += '<td><b></b></td>';
+                html += '<td><b></b></td>';
+                html += '<td><b></b></td>';
+                html += '<td><b></b></td>';
+                html += '<td style="color:#df2161"><b>RATE HOST</b></td>';
+                html += '</tr>';
+
+                for (var i = 0; i < jsonData.length; ++i) {
+                    var item = jsonData[i];
+
+                    html += '<tr>';
+                    html += '<td>' + item.serviceFullName + '</td>';
+                    if (item.serviceRating == 0){
+                        html += '<td><img src="images/rating/no_rating.png" class="rating_image"/></td>';
+                    }else if(item.serviceRating == 1){
+                        html += '<td><img src="images/rating/1star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 2){
+                        html += '<td><img src="images/rating/2star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 3){
+                        html += '<td><img src="images/rating/3star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 4){
+                        html += '<td><img src="images/rating/4star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 5){
+                        html += '<td><img src="images/rating/5star_rating.png" class="rating_image"/></td>';
+                    }
+                    html += '<td>' + item.serviceDescription + '</td>';
+                    html += '<td></td>';
+                    html += '<td></td>';
+                    html += '<td></td>';
+                    html += '<td></td>';
+                    html += '<td><div id="currentRatingOfTheHost"></div></td>';
+                    html += '</tr>';
+
+
+                }
+                html += '</table>';
+                servicesHistory.innerHTML = html;
+
+
+            })
+            .catch(function (err) {
+                alert('Error');
+
+            })
+
+    //Rates service host by getting a current rating and adding a rating of current member (logged member)
+
+    function showRateServiceHost() {
+        var html = '<div class="ratingBox">';
+        fetch('/rate_service', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+            .then(function (response) {
+                return response.json();
+            })
+
+            .then(function (jsonData) {
+                    if(jsonData.valueAsNumber == null || jsonData == 0){
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="firstImage" onclick="rateServiceHostOneStar()"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="secondImage"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="thirdImage"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage"/>';
+                        currentRatingOfTheHost.innerHTML = html;
+                    }
+                    else if(jsonData.valueAsNumber == 1){
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="firstImage"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="secondImage"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="thirdImage"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage"/>';
+                        currentRatingOfTheHost.innerHTML = html;
+                    }
+                    else if(jsonData == 2){
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="firstImage"/>';
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="secondImage"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="thirdImage"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage"/>';
+                        currentRatingOfTheHost.innerHTML = html;
+                    }
+                    else if(jsonData == 3){
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="firstImage"/>';
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="secondImage"/>';
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="thirdImage"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage"/>';
+                        currentRatingOfTheHost.innerHTML = html;
+                    }
+                    else if(jsonData == 4){
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="firstImage"/>';
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="secondImage"/>';
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="thirdImage"/>';
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="fourthImage"/>';
+                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage"/>';
+                        currentRatingOfTheHost.innerHTML = html;
+                    }
+                    else if(jsonData == 5){
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="firstImage"/>';
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="secondImage"/>';
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="thirdImage"/>';
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="fourthImage"/>';
+                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="fifthImage"/>';
+                        currentRatingOfTheHost.innerHTML = html;
+                    }
+            })
+            .catch(function (err) {
+                alert('Error');
+            })
+    }
+
+
+    function rateServiceHostOneStar(){
+        fetch('/update_rating', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                hostRating: 1
+            })
+        })
+
+            .then(function (response) {
+                alert("Thank You")
+            })
+
+            .catch(function (err) {
+                alert("Something went wrong");
+            });
+    }
+
+
+
+
+
+
+</script>
+</html>

@@ -7,6 +7,8 @@ import java.math.BigInteger;
 
 public class ServiceData {
     private BigInteger serviceId;
+    private String firstName;
+    private String lastName;
     private String serviceName;
     private String serviceDescription;
     private String serviceDuration;
@@ -25,6 +27,22 @@ public class ServiceData {
 
     public void setServiceId(BigInteger serviceId) {
         this.serviceId = serviceId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getServiceName() {

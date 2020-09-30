@@ -54,25 +54,22 @@
             <column name="password" type="TEXT">
                 <constraints nullable="false"/>
             </column>
+            <column name="hostrole" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
         </createTable>
 
 
-        <createTable  tableName="abouthosts">
+        <createTable  tableName="roles">
             <column  name="id"  type="BIGINT" autoIncrement="true">
                 <constraints  nullable="false"  primaryKey="true"/>
             </column>
-            <column  name="service"  type="TEXT">
+            <column  name="user_role"  type="TEXT">
                 <constraints  nullable="false"/>
             </column>
-            <column  name="address"  type="TEXT">
-                <constraints  nullable="false"/>
-            </column>
-            <column name="address_type" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column  name="host_id"  type="BIGINT">
+            <column  name="user_id"  type="BIGINT">
                 <constraints  nullable="false" unique="false"
-                              foreignKeyName="fk_abouthosts_hosts" references="hosts(id)"/>
+                              foreignKeyName="fk_roles_hosts" references="hosts(id)"/>
             </column>
         </createTable>
 
@@ -114,15 +111,21 @@
 
 
     <changeSet author="Jevgeni" id="2020-09-16">
-        <createTable  tableName="all_services">
+        <createTable  tableName="experienced_services">
             <column  name="id"  type="BIGINT" autoIncrement="true">
                 <constraints  nullable="false"  primaryKey="true"/>
             </column>
-            <column  name="service_name"  type="TEXT">
-                <constraints  nullable="false"/>
-            </column>
-            <column  name="service_duration"  type="TEXT">
+            <column  name="rating"  type="TEXT">
                 <constraints  nullable="true"/>
+            </column>
+            <column name="service_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="host_id" type="BIGINT">
+                <constraints foreignKeyName="fk_experienced_services_services" references="hosts(id)"/>
+            </column>
+            <column name="logged_member_id" type="BIGINT">
+                <constraints nullable="false"/>
             </column>
 
         </createTable>

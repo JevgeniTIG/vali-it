@@ -11,6 +11,8 @@ public class WelcomeHostRowMapper implements RowMapper<HostData> {
         HostData loggedHost = new HostData();
         loggedHost.setHostName(resultSet.getString("firstname"));
         loggedHost.setHostLastName(resultSet.getString("lastname"));
+        loggedHost.setHostRole(resultSet.getString("hostrole"));
+        loggedHost.setHostLogin(resultSet.getString("hostlogin"));
         return loggedHost;
     }
 }

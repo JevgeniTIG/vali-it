@@ -13,11 +13,8 @@
     <img src="logo.png" alt="logo"/>
     <div class="header-right">
 
-        <button id="hostButton1" onclick="location.href='host_login_page.html'">Sign in as host</button>
-        <button id="hostButton2" onclick="location.href='host_register_page.html'">Become a host</button>
-        <p></p>
-        <button id="userButton1" onclick="location.href='user_page.html'">Sign in</button>
-        <button id="userButton2" onclick="location.href='user_register_page.html'">Sign up</button>
+        <button id="hostButton1" onclick="location.href='member_login_page.html'">Sign in</button>
+        <button id="userButton2" onclick="location.href='member_register_page.html'">Sign up</button>
 
     </div>
 </div>
@@ -108,7 +105,9 @@
 
                     html += '<tr>';
                     html += '<td>' + item.serviceFullName + '</td>';
-                    html += '<td>' + item.serviceRating + '</td>';
+                    if (item.serviceRating == 0){
+                        html += '<td><img src="images/rating/no_rating.png" class="rating_image"/></td>';
+                    }
                     html += '<td>' + item.serviceDescription + '</td>';
                     html += '<td>' + item.serviceDuration + '</td>';
                     html += '<td>' + item.servicePrice + '</td>';

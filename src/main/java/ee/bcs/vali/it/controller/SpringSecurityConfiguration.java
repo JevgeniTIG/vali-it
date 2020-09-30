@@ -18,15 +18,17 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/styles.css", "/logo.png", "/images/**",
-                        "/pic_carousel_1.jpg", "/register_new_host", "/host_register_page.html", "/register_new_user",
-                        "/user_register_page.html", "/css/**", "/fonts/**", "/", "/add_service", "/show_logged_host_services",
-                        "/delete_service", "/show_suitable_services").permitAll()
+                        "/pic_carousel_1.jpg", "/register_new_member", "/member_register_page.html", "/register_new_host",
+                        "/host_register_page.html", "/css/**", "/fonts/**", "/", "/add_service", "/show_logged_host_services",
+                        "/delete_service", "/show_suitable_services", "/index.html", "/add_experienced_service",
+                        "/show_logged_member_services_history", "/rate_service", "/update_rating").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/host_login_page.html")
+                .loginPage("/member_login_page.html")
                 .loginProcessingUrl("/login")
-                .defaultSuccessUrl("/host_page.html")
+                .defaultSuccessUrl("/member_page.html")
+
 
                 //.failureUrl("/?error=true")
                 .permitAll()

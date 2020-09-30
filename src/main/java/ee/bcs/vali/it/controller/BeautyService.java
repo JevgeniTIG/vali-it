@@ -26,17 +26,10 @@ public class BeautyService {
     private PasswordEncoder passwordEncoder;
 
 
-
-    // Registers new user
-    public void registerUser(String userName, String userLastName, String userEmail, String userPhone, String userLogin, String userPassword) {
-        beautyRepository.registerUser(userName, userLastName, userEmail, userPhone, userLogin, passwordEncoder.encode(userPassword));
-    }
-
-
     // Registers new host
-    public void registerHost(String hostName, String hostLastName, String hostEmail, String hostPhone,
+    public void registerMember(String hostName, String hostLastName, String hostEmail, String hostPhone,
                              String hostLogin, String hostPassword) {
-        beautyRepository.registerHost(hostName, hostLastName, hostEmail, hostPhone,
+        beautyRepository.registerMember(hostName, hostLastName, hostEmail, hostPhone,
                 hostLogin, passwordEncoder.encode(hostPassword));
     }
 
@@ -80,9 +73,14 @@ public class BeautyService {
         return beautyRepository.showLoggedHostServices(currentHostLogin);
     }
 
+    //Shows services history of logged member
+    public List showLoggedMemberServicesHistory(String currentMemberLogin) {
+        return beautyRepository.showLoggedMemberServicesHistory(currentMemberLogin);
+    }
+
     //Shows suitable services
     @PostMapping("show_suitable_services")
-    public List showSuitableServices(String serviceLocation, String serviceName, BigDecimal servicePrice){
+    public List<ServiceData> showSuitableServices(String serviceLocation, String serviceName, BigDecimal servicePrice){
         return beautyRepository.showSuitableServices(serviceLocation, serviceName, servicePrice);
     }
 
@@ -91,12 +89,33 @@ public class BeautyService {
         beautyRepository.deleteLoggedHostService(rowNumberToDelete);
     }
 
+    //Adds a service to table 'experienced_services'
+    public void addExperiencedService(BigInteger serviceId, String currentMemberLogin) {
+        beautyRepository.addExperiencedService(serviceId, currentMemberLogin);
+    }
 
-        // Returns the username of the host that is currently logged in
+    //Rates a service experienced by logged member
+    public double rateService(BigInteger serviceId) {
+        return beautyRepository.rateService(serviceId);
+    }
+
+    // Returns the username of the host that is currently logged in
     public BigInteger loggedHostId(String hostLogin) {
         return beautyRepository.loggedHostId(hostLogin);
     }
 
 
+    public String currentUserName(String currentUser) {
+        return beautyRepository.currentUserName(currentUser);
+    }
 
+    //Registers new host and updates hostrole of current member in table 'hosts'
+    public void registerHost(String currentMemberLogin) {
+        beautyRepository.registerHost(currentMemberLogin);
+    }
+
+    //Updates rating
+    public void updateRating(double hostRating, String memberBeingLogged) {
+        beautyRepository.updateRating(hostRating, memberBeingLogged);
+    }
 }

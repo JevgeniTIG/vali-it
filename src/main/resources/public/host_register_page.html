@@ -22,41 +22,52 @@
         <div class="form-left">
             <img src="images/register_host_image.jpg" alt="form">
             <div class="text-1">
-                <p>REGISTER ME AS a HOST</p>
+                <p>BECOME A HOST</p>
             </div>
             <div class="text-2">
-                <p><span>join</span>Now</p>
+                <p><span>earn money</span>with us</p>
             </div>
         </div>
         <form class="form-detail" action="#" method="post" id="myform">
             <h2>Registration Form</h2>
             <div class="form-row">
-                <label for="firstName">First Name:</label>
-                <input type="text" name="firstName" id="firstName" class="input-text">
-            </div>
-            <div class="form-row">
-                <label for="lastName">Last Name:</label>
-                <input type="text" name="lastName" id="lastName" class="input-text">
-            </div>
-            <div class="form-row">
-                <label for="hostEmail">Email:</label>
-                <input type="text" name="hostEmail" id="hostEmail" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
-            </div>
-            <div class="form-row">
-                <label for="hostPhone">Phone:</label>
-                <input type="text" name="hostPhone" id="hostPhone" class="input-text" placeholder="372XXXXXXX">
-            </div>
-            <div class="form-row">
-                <label for="hostUserName">Username:</label>
-                <input type="text" name="hostUserName" id="hostUserName" class="input-text">
-            </div>
-            <div class="form-row">
-                <label for="hostPassword">Password:</label>
-                <input type="password" name="hostPassword" id="hostPassword" class="input-text" required>
-            </div>
-            <div class="form-row">
-                <label for="confirmHostPassword">Confirm Password:</label>
-                <input type="password" name="confirmHostPassword" id="confirmHostPassword" class="input-text" required>
+                <pre>
+So close, no matter how far
+Couldn't be much more from the heart
+Forever trusting who we are
+And nothing else matters
+
+Never opened myself this way
+Life is ours, we live it our way
+All these words I don't just say
+And nothing else matters
+
+Trust I seek and I find in you
+Every day for us something new
+Open mind for a different view
+And nothing else matters
+
+Never cared for what they do
+Never cared for what they know
+But I know
+
+So close, no matter how far
+Couldn't be much more from the heart
+Forever trusting who we are
+And nothing else matters
+
+Never cared for what they do
+Never cared for what they know
+But I know
+
+I never opened myself this way
+Life is ours, we live it our way
+All these words I don't just say
+And nothing else matters
+
+Trust I seek and I find in you
+Every…
+                </pre>
             </div>
             <div class="form-row-last">
                 <input type="submit" name="register" id="register" class="register" value="Register">
@@ -68,37 +79,32 @@
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 <script>
-    // just for the demos, avoids form submit
-    jQuery.validator.setDefaults({
-        debug: true,
-        success:  function(label){
-            label.attr('id', 'valid');
-        },
-    });
-    $( "#myform" ).validate({
-        rules: {
-            password: "required",
-            confirm_password: {
-                equalTo: "#password"
-            }
-        },
-        messages: {
-            full_name: {
-                required: "Please provide an username"
-            },
-            your_email: {
-                required: "Please provide an email"
-            },
-            password: {
-                required: "Please provide a password"
-            },
-            confirm_password: {
-                required: "Please provide a password",
-                equalTo: "Wrong Password"
-            }
-        }
-    });
 
+    //
+    var currentUserLogin;
+    fetch('/welcome_host', {
+        method: 'POST',
+        cache: 'no-cache',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (jsonData) {
+
+            for (var i = 0; i < jsonData.length; ++i) {
+                var item = jsonData[i];
+                currentUserLogin = item.hostLogin;
+            }
+
+        })
+
+        .catch(function (err) {
+            console.log(err);
+            alert('oops');
+        });
 
     // Registers new host
     let registerButton = document.getElementById("register")
@@ -111,31 +117,25 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                hostName: firstName.value,
-                hostLastName: lastName.value,
-                hostEmail: hostEmail.value,
-                hostPhone: hostPhone.value,
-                hostLogin: hostUserName.value,
-                hostPassword: hostPassword.value
 
             })
         })
 
             .then(function (response) {
-                registerButton.value = 'Registered';
-                firstName.value = ' ';
-                lastName.value = ' ';
-                hostEmail.value = ' ';
-                hostPhone.value = ' ';
-                hostUserName.value = ' ';
-                hostPassword.value = ' ';
+
+                proceedToIndexPage();
             })
 
             .catch(function (err) {
-                alert('User with such name or login already exists');
+                alert('Something went wrong');
             });
 
     });
+
+    function proceedToIndexPage(){
+        alert("Congratulations! Now you are a host");
+        window.location.href = 'index.html';
+    }
 
 
 </script>

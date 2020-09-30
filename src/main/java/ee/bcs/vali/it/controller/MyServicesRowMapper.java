@@ -12,6 +12,8 @@ public class MyServicesRowMapper implements RowMapper<ServiceData>{
     @Override
     public ServiceData mapRow(ResultSet resultSet, int i) throws SQLException {
         ServiceData loggedHostServices = new ServiceData();
+
+        //loggedHostServices.setServiceRating(resultSet.getDouble("rating"));
         loggedHostServices.setServiceName(resultSet.getString("service_name"));
         loggedHostServices.setServiceDescription(resultSet.getString("service_description"));
         loggedHostServices.setServiceDuration(resultSet.getString("service_duration"));

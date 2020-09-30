@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>User Register</title>
+    <title>Member Register</title>
     <!-- Mobile Specific Metas -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- Font-->
@@ -20,9 +20,9 @@
 <div class="page-content">
     <div class="form-v2-content">
         <div class="form-left">
-            <img src="images/register_user_image.jpg" alt="form">
+            <img src="images/register_member_image.jpg" alt="form">
             <div class="text-1">
-                <p>REGISTER AS NEW USER</p>
+                <p>BECOME A NEW MEMBER</p>
             </div>
             <div class="text-2">
                 <p><span>join</span>Now</p>
@@ -39,24 +39,24 @@
                 <input type="text" name="lastName" id="lastName" class="input-text">
             </div>
             <div class="form-row">
-                <label for="userEmail">Email:</label>
-                <input type="text" name="userEmail" id="userEmail" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+                <label for="hostEmail">Email:</label>
+                <input type="text" name="hostEmail" id="hostEmail" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
             </div>
             <div class="form-row">
-                <label for="userPhone">Phone:</label>
-                <input type="text" name="userPhone" id="userPhone" class="input-text" placeholder="372XXXXXXX">
+                <label for="hostPhone">Phone:</label>
+                <input type="text" name="hostPhone" id="hostPhone" class="input-text" placeholder="372XXXXXXX">
             </div>
             <div class="form-row">
-                <label for="userUserName">Username:</label>
-                <input type="text" name="userUserName" id="userUserName" class="input-text">
+                <label for="hostUserName">Username:</label>
+                <input type="text" name="hostUserName" id="hostUserName" class="input-text">
             </div>
             <div class="form-row">
-                <label for="userPassword">Password:</label>
-                <input type="password" name="userPassword" id="userPassword" class="input-text" required>
+                <label for="hostPassword">Password:</label>
+                <input type="password" name="hostPassword" id="hostPassword" class="input-text" required>
             </div>
             <div class="form-row">
-                <label for="confirmUserPassword">Confirm Password:</label>
-                <input type="password" name="confirmUserPassword" id="confirmUserPassword" class="input-text" required>
+                <label for="confirmHostPassword">Confirm Password:</label>
+                <input type="password" name="confirmHostPassword" id="confirmHostPassword" class="input-text" required>
             </div>
             <div class="form-row-last">
                 <input type="submit" name="register" id="register" class="register" value="Register">
@@ -102,33 +102,34 @@
 
     // Registers new host
     let registerButton = document.getElementById("register")
-    registerButton.addEventListener('click', function createUser() {
+    registerButton.addEventListener('click', function createHost() {
 
-        fetch('/register_new_user', {
+        fetch('/register_new_member', {
             method: 'POST',
             cache: 'no-cache',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                userName: firstName.value,
-                userLastName: lastName.value,
-                userEmail: userEmail.value,
-                userPhone: userPhone.value,
-                userLogin: userUserName.value,
-                userPassword: userPassword.value
+                hostName: firstName.value,
+                hostLastName: lastName.value,
+                hostEmail: hostEmail.value,
+                hostPhone: hostPhone.value,
+                hostLogin: hostUserName.value,
+                hostPassword: hostPassword.value,
 
             })
         })
 
             .then(function (response) {
-                registerButton.value = 'Registered';
+                //registerButton.value = 'Registered';
                 firstName.value = ' ';
                 lastName.value = ' ';
-                userEmail.value = ' ';
-                userPhone.value = ' ';
-                userUserName.value = ' ';
-                userPassword.value = ' ';
+                hostEmail.value = ' ';
+                hostPhone.value = ' ';
+                hostUserName.value = ' ';
+                hostPassword.value = ' ';
+                proceedToIndexPage();
             })
 
             .catch(function (err) {
@@ -136,6 +137,13 @@
             });
 
     });
+
+    function proceedToIndexPage(){
+        alert("Congratulations! Now you are a member");
+        window.location.href = 'index.html';
+
+    }
+
 
 
 </script>

@@ -13,6 +13,8 @@ public class HostData {
     private String hostAddress;
     private String hostAddressType;
     private BigInteger hostId;
+    private String hostRole;
+    private double hostRating;
 
     public String getHostName() {
         return hostName;
@@ -92,5 +94,21 @@ public class HostData {
 
     public void setHostId(BigInteger hostId) {
         this.hostId = hostId;
+    }
+
+    public String getHostRole() {
+        return hostRole;
+    }
+
+    public void setHostRole(String hostRole) {
+        this.hostRole = hostRole;
+    }
+
+    public double getHostRating() {
+        return hostRating;
+    }
+
+    public void setHostRating(double hostRating) {
+        this.hostRating = hostRating;
     }
 }

@@ -22,19 +22,17 @@ public class Controller {
     private BeautyService beautyService;
 
 
-    //Posts new user to table 'users'
-    @PostMapping("register_new_user")
-    public void registerUser(@RequestBody UserData request) {
-        beautyService.registerUser(request.getUserName(), request.getUserLastName(), request.getUserEmail(),
-                request.getUserPhone(), request.getUserLogin(), request.getUserPassword());
+    //Posts new host to table 'hosts'
+    @PostMapping("register_new_member")
+    public void registerMember(@RequestBody HostData request) {
+        beautyService.registerMember(request.getHostName(), request.getHostLastName(), request.getHostEmail(),
+                request.getHostPhone(), request.getHostLogin(), request.getHostPassword());
     }
 
-
-    //Posts new host to table 'hosts'
+    //Registers new host and updates hostrole of current member in table 'hosts'
     @PostMapping("register_new_host")
-    public void registerHost(@RequestBody HostData request) {
-        beautyService.registerHost(request.getHostName(), request.getHostLastName(), request.getHostEmail(),
-                request.getHostPhone(), request.getHostLogin(), request.getHostPassword());
+    public void registerHost(Principal principal) {
+        beautyService.registerHost(principal.getName());
     }
 
 
@@ -91,7 +89,7 @@ public class Controller {
 
     //Shows suitable services
     @GetMapping("show_suitable_services")
-    public List showSuitableServices(@RequestParam String serviceAddress, @RequestParam String serviceName,
+    public List<ServiceData> showSuitableServices(@RequestParam String serviceAddress, @RequestParam String serviceName,
                                      @RequestParam BigDecimal servicePrice){
 
         return beautyService.showSuitableServices(serviceAddress, serviceName, servicePrice);
@@ -104,12 +102,39 @@ public class Controller {
         beautyService.deleteLoggedHostService(request.getServiceId());
     }
 
+    //Adds a service to table 'experienced_services'
+    @PostMapping("add_experienced_service")
+    public void addExperiencedService(@RequestBody ServiceData request, Principal principal) {
+        beautyService.addExperiencedService(request.getServiceId(), principal.getName());
+    }
+
+    //Shows services history of logged member
+    @PostMapping("show_logged_member_services_history")
+    public List showLoggedMemberServicesHistory(Principal principal) {
+        return beautyService.showLoggedMemberServicesHistory(principal.getName());
+    }
+
+    //Rates a service experienced by logged member
+    @PostMapping("rate_service")
+    public double rateService(@RequestBody ServiceData request){
+        return beautyService.rateService(request.getServiceId());
+    }
+
+    //Updates rating
+    @PostMapping("update_rating")
+    public void updateRating(@RequestBody HostData request, Principal principal){
+        beautyService.updateRating(request.getHostRating(), principal.getName());
+    }
+
 
     // Returns the username of the host that is currently logged in
-    @RequestMapping(value = "/username", method = RequestMethod.GET)
+    @RequestMapping(value = "/role", method = RequestMethod.GET)
     @ResponseBody
-    public String currentUserName(Principal principal) {
-        return principal.getName();
+    @GetMapping
+    public String currentUserName(Principal principal, @RequestBody HostData request) {
+
+        String currentMemberName = principal.getName();
+        return beautyService.currentUserName(currentMemberName);
     }
 
 

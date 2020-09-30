@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Page</title>
+    <title>Member Page</title>
     <link rel="stylesheet" href="styles.css">
 
 
@@ -13,16 +13,16 @@
     <div class="header-right">
         <!Welcomes customer>
         <div id="helloMessage"></div>
-        <button id="userButton1" onclick="location.href='index.html'">Log out</button>
-        <button id="showMyServicesHistoryButton" onclick="location.href='my_services_history.html'">Services History</button>
+        <button id="hostButton1" onclick="location.href='index.html'">Log out</button>
+        <button id="showMyServicesHistoryButton" onclick="location.href='services_history.html'">Services History</button>
     </div>
 </div>
 
+<div id="checkMember"></div>
+
 
 <div class="container">
-    <div class="content_selection_form">
-        <img src="images/host_page_background.jpg"">
-    </div>
+    <img src="images/member_page_background.jpg" >
     <div class="overlay">
         <table class="myTableFormatSearch">
             <tr>
@@ -58,17 +58,14 @@
 
             </tr>
         </table>
-
     </div>
     <div id="suitableServices"></div>
 </div>
 
-
-
-
 </body>
 
 <script>
+    var currentUser;
     fetch('/welcome_host', {
         method: 'POST',
         cache: 'no-cache',
@@ -87,10 +84,11 @@
                 html += ' ';
                 html += item.hostLastName;
                 html += '!';
+                currentUser = item.hostRole;
             }
             html += '</span>'
             helloMessage.innerHTML = 'Welcome, ' + html;
-
+            checkMemberRole();
         })
 
 
@@ -99,7 +97,68 @@
             alert('oops');
         });
 
+    // Checks if currently logged member is also a host. If yes >>> changes interface and functionality of member_page.html
+    function checkMemberRole(){
+        if(currentUser == 'member'){
+            becomeHost();
 
+        }
+         else if(currentUser =='member and host'){
+             addNewService();
+             showMyServices();
+        }
+    }
+
+    // Adds a button 'Become a host'
+    function becomeHost(){
+        var button = document.createElement("button");
+        button.id = "hostButton1";
+        button.innerHTML = "Become a host";
+
+        var div = document.getElementsByTagName("div")[0];
+        div.appendChild(button);
+
+
+        button.addEventListener ("click", function common(){
+            location.href= "host_register_page.html"
+
+        });
+    }
+
+    // Adds a button 'Add Service'
+    function addNewService(){
+        var button = document.createElement("button");
+        button.id = "hostButton1";
+        button.innerHTML = "Add New Service";
+
+        var div = document.getElementsByTagName("div")[4];
+        div.appendChild(button);
+
+
+        button.addEventListener ("click", function common(){
+            location.href= "add_service.html"
+
+        });
+    }
+
+    // Adds a button 'Add Service'
+    function showMyServices(){
+        var button = document.createElement("button");
+        button.id = "hostButton1";
+        button.innerHTML = "My Services";
+
+        var div = document.getElementsByTagName("div")[2];
+        div.appendChild(button);
+
+
+        button.addEventListener ("click", function common(){
+            location.href= "my_services.html"
+
+        });
+    }
+
+
+    //Shows suitable services on the same page bellow the search console
     let showButton = document.getElementById("show_services")
     showButton.addEventListener('click', function filterServices() {
         fetch('/show_suitable_services?serviceAddress=' + serviceLocation.value + '&serviceName=' + service.value + '&servicePrice=' + price.value,{
@@ -136,7 +195,21 @@
                     html += '<tr>';
                     html += '<td>' + item.serviceFullName + '</td>';
                     if (item.serviceRating == 0){
-                        html += '<td><img src="images/1star_rating.png" class="rating_image"/></td>';
+                        html += '<td><img src="images/rating/no_rating.png" class="rating_image"/></td>';
+                    }else if(item.serviceRating == 1){
+                        html += '<td><img src="images/rating/1star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 2){
+                        html += '<td><img src="images/rating/2star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 3){
+                        html += '<td><img src="images/rating/3star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 4){
+                        html += '<td><img src="images/rating/4star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 5){
+                        html += '<td><img src="images/rating/5star_rating.png" class="rating_image"/></td>';
                     }
                     html += '<td>' + item.serviceDescription + '</td>';
                     html += '<td>' + item.serviceDuration + '</td>';
@@ -145,7 +218,7 @@
                     html += '<td>' + item.serviceRoomType + '</td>';
                     html += '<td>' + item.serviceAddress + '</td>';
                     html += '<td><input type="button" id="blueButton" value="Reserve" ' +
-                        'onclick="<a href="mailto:jastream@hotmail.com"></a></td>';
+                        'onclick= "sendToExperiencedServicesTable('+item.serviceId+')"></td>';
                     html += '</tr>';
 
 
@@ -160,6 +233,34 @@
 
             })
     });
+
+    // Adds a service to table 'experienced_services'
+    function sendToExperiencedServicesTable(serviceNumber){
+        fetch('/add_experienced_service', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify({
+                serviceId: serviceNumber
+
+            })
+        })
+
+            .then(function (response) {
+                alert("Service Booked");
+
+            })
+
+            .catch(function (err) {
+                alert('Something went wrong');
+            })
+
+    }
+
+
 
 
 </script>

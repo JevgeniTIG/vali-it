@@ -20,7 +20,7 @@ public class SuitableServicesRowMapper implements RowMapper<ServiceData>{
         suitableServices.setServiceRoomType(resultSet.getString("room_type"));
         suitableServices.setServiceAddress(resultSet.getString("location"));
         suitableServices.setServiceFullName(resultSet.getString("full_name"));
-
+        suitableServices.setServiceId(BigInteger.valueOf(resultSet.getLong("id")));
         return suitableServices;
     }
 }
