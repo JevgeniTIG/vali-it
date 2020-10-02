@@ -88,6 +88,15 @@ public class Controller {
     }
 
 
+    //Shows suitable services when member is logged
+    @GetMapping("show_suitable_services_logged")
+    public List<ServiceData> showSuitableServicesLogged(@RequestParam String serviceAddress, @RequestParam String serviceName,
+                                                  @RequestParam BigDecimal servicePrice, Principal principal){
+
+        return beautyService.showSuitableServicesLogged(serviceAddress, serviceName, servicePrice, principal.getName());
+    }
+
+
     //Deletes specific service of logged host from table 'services'
     @PostMapping("delete_service")
     public void deleteLoggedHostService(@RequestBody ServiceData request) {
@@ -102,8 +111,8 @@ public class Controller {
 
     //Checks if a selected service already exists in table 'experienced_services'
     @PostMapping("check_if_experienced_service_exists")
-    public BigInteger checkIfExperiencedServiceExists(@RequestBody ServiceData request, Principal principal) {
-        return beautyService.checkIfExperiencedServiceExists(request.getServiceId(), principal.getName());
+    public List checkIfExperiencedServiceExists(@RequestBody ServiceData request) {
+        return beautyService.checkIfExperiencedServiceExists(request.getServiceId());
     }
 
     //Shows services history of logged member
@@ -112,17 +121,18 @@ public class Controller {
         return beautyService.showLoggedMemberServicesHistory(principal.getName());
     }
 
-    //Rates a service experienced by logged member
-    @PostMapping("rate_service")
-    public double rateService(@RequestBody ServiceData request){
-        return beautyService.rateService(request.getServiceId());
-    }
-
     //Updates rating
     @PostMapping("update_rating")
     public void updateRating(@RequestBody ServiceData request){
         beautyService.updateRating(request.getServiceId(), request.getServiceRating());
     }
+
+    //Gets current rating
+    @PostMapping("get_rating")
+    public double getRating(@RequestBody ServiceData request){
+        return beautyService.getRating(request.getServiceId());
+    }
+
 
 
     // Returns the username of the host that is currently logged in

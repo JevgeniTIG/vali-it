@@ -15,6 +15,7 @@ public class ServicesHistoryRowMapper implements RowMapper<ServiceData>{
         loggedMemberServicesHistory.setServiceFullName(resultSet.getString("full_name"));
         loggedMemberServicesHistory.setServiceRating(resultSet.getDouble("rating"));
         loggedMemberServicesHistory.setServiceDescription(resultSet.getString("service_description"));
+        loggedMemberServicesHistory.setServiceId(BigInteger.valueOf(resultSet.getLong("service_id")));
 
         return loggedMemberServicesHistory;
     }

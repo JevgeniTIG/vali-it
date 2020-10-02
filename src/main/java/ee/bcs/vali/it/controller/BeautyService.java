@@ -78,6 +78,11 @@ public class BeautyService {
         return beautyRepository.showSuitableServices(serviceLocation, serviceName, servicePrice);
     }
 
+    //Shows suitable services when member is logged
+    public List<ServiceData> showSuitableServicesLogged(String serviceLocation, String serviceName, BigDecimal servicePrice, String loggedMemberLogin){
+        return beautyRepository.showSuitableServicesLogged(serviceLocation, serviceName, servicePrice, loggedMemberLogin);
+    }
+
     //Deletes specific service of logged host in table 'services'
     public void deleteLoggedHostService(BigInteger rowNumberToDelete) {
         beautyRepository.deleteLoggedHostService(rowNumberToDelete);
@@ -86,11 +91,6 @@ public class BeautyService {
     //Adds a service to table 'experienced_services'
     public void addExperiencedService(BigInteger serviceId, String currentMemberLogin) {
         beautyRepository.addExperiencedService(serviceId, currentMemberLogin);
-    }
-
-    //Rates a service experienced by logged member
-    public double rateService(BigInteger serviceId) {
-        return beautyRepository.rateService(serviceId);
     }
 
     // Returns the username of the host that is currently logged in
@@ -110,11 +110,26 @@ public class BeautyService {
 
     //Updates rating
     public void updateRating(BigInteger serviceId, Double serviceRating) {
-        beautyRepository.updateRating(serviceId, serviceRating);
+        double averageRating = (beautyRepository.getRating(serviceId)+serviceRating)/2;
+        int averageRatingInt = (int) averageRating;
+        double fractional = averageRating - averageRatingInt;
+        if (fractional<0.5){
+            averageRating = averageRatingInt;
+        }else if (fractional>=0.5){
+            averageRating = averageRatingInt+1;
+        }
+        beautyRepository.updateRating(serviceId, averageRating);
+    }
+
+    //Gets current rating
+    public double getRating(BigInteger serviceId) {
+        return beautyRepository.getRating(serviceId);
     }
 
     //Checks if a selected service already exists in table 'experienced_services'
-    public BigInteger checkIfExperiencedServiceExists(BigInteger serviceId, String loggedMemberLogin) {
-        return beautyRepository.checkIfExperiencedServiceExists(serviceId, loggedMemberLogin);
+    public List<ServiceData> checkIfExperiencedServiceExists(BigInteger serviceId) {
+        return beautyRepository.checkIfExperiencedServiceExists(serviceId);
     }
+
+
 }

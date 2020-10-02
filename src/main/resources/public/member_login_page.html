@@ -20,7 +20,7 @@
 <div class="page-content">
     <div class="form-v2-content">
         <div class="form-left">
-            <img src="/images/login_host_image.jpg" alt="form">
+            <img src="" id="myPicture" alt="form">
             <div class="text-1">
                 <p>SIGN IN<span></span></p>
             </div>
@@ -47,7 +47,14 @@
 <script>
 
 
+    window.onload = choosePic;
 
+    var myPix = new Array("images/login_member_image1.jpg","images/login_member_image2.jpg");
+
+    function choosePic() {
+        var randomNum = Math.floor(Math.random() * myPix.length);
+        document.getElementById("myPicture").src = myPix[randomNum];
+    }
 
 
 </script>

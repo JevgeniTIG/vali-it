@@ -97,15 +97,6 @@ public class BeautyRepository {
         dataBase.update(sql, paramMap);
     }
 
-    //Rates a service experienced by logged member
-    public double rateService(BigInteger serviceId) {
-        String sql = "SELECT rating FROM experienced_services WHERE service_id= :serviceId)";
-        Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("service_id", serviceId);
-        //paramMap.put("serviceId", serviceId);
-        return dataBase.queryForObject(sql, paramMap, Double.class);
-    }
-
 
     //Updates rating
     public void updateRating(BigInteger serviceId, Double serviceRating) {
@@ -153,7 +144,7 @@ public class BeautyRepository {
     //Shows services history of logged member
     public List<ServiceData> showLoggedMemberServicesHistory(String currentMemberLogin) {
 
-        String sql = "SELECT hosts.firstname || ' ' || hosts.lastname full_name, experienced_services.rating rating, service_description\n" +
+        String sql = "SELECT experienced_services.service_id service_id, hosts.firstname || ' ' || hosts.lastname full_name, experienced_services.rating rating, service_description\n" +
                 "FROM services\n" +
                 "         join hosts on services.host_id= hosts.id\n" +
                 "         join experienced_services on services.id = experienced_services.service_id\n" +
@@ -181,6 +172,25 @@ public class BeautyRepository {
         paramMap.put("service_location", serviceLocation);
         paramMap.put("service_name", serviceName);
         paramMap.put("service_price", servicePrice);
+        List<ServiceData> resultList = dataBase.query(sql, paramMap, new SuitableServicesRowMapper());
+        return resultList;
+    }
+
+    //Shows suitable services when member is logged
+    public List<ServiceData> showSuitableServicesLogged(String serviceLocation, String serviceName, BigDecimal servicePrice, String loggedMemberLogin){
+
+
+        String sql = "SELECT services.id, hosts.firstname || ' ' || hosts.lastname full_name, " +
+                "rating, service_name, service_description, " +
+                "service_duration, service_price, payment_method, room_type, service_location FROM services " +
+                "join hosts on services.host_id= hosts.id " +
+                "WHERE service_location= :service_location AND service_price<= :service_price AND service_name= :service_name AND services.host_id!=(SELECT id FROM hosts WHERE hostlogin= :loggedMemberLogin)";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("service_location", serviceLocation);
+        paramMap.put("service_name", serviceName);
+        paramMap.put("service_price", servicePrice);
+        paramMap.put("hostlogin", loggedMemberLogin);
+        paramMap.put("loggedMemberLogin", loggedMemberLogin);
         List<ServiceData> resultList = dataBase.query(sql, paramMap, new SuitableServicesRowMapper());
         return resultList;
     }
@@ -221,14 +231,21 @@ public class BeautyRepository {
     }
 
     //Checks if a selected service already exists in table 'experienced_services'
-    public BigInteger checkIfExperiencedServiceExists(BigInteger serviceId, String loggedMemberLogin) {
-        String sql = "SELECT COUNT service_id FROM experienced_services WHERE service_id= :serviceId AND logged_member_id= (SELECT id FROM hosts WHERE hostlogin= :loggedMemberLogin)";
+    public List<ServiceData> checkIfExperiencedServiceExists(BigInteger serviceId) {
+        String sql = "SELECT service_id FROM experienced_services WHERE service_id= :serviceId";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("serviceId", serviceId);
-        paramMap.put("hostlogin", loggedMemberLogin);
-        paramMap.put("loggedMemberLogin", loggedMemberLogin);
-        return BigInteger.valueOf(dataBase.update(sql, paramMap));
+        List<ServiceData> resultList = dataBase.query(sql, paramMap, new SuitableServicesRowMapper());
+        return resultList;
 
+
+    }
+    //Gets current rating
+    public double getRating(BigInteger serviceId) {
+        String sql = "SELECT rating FROM services WHERE id= :serviceId";
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("serviceId", serviceId);
+        return dataBase.queryForObject(sql, paramMap, double.class);
     }
 }
 

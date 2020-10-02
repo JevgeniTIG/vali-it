@@ -124,7 +124,7 @@
         });
     }
 
-
+    var serviceNumber;
     //Shows services history of logged member on the same page
         fetch('/show_logged_member_services_history', {
             method: 'POST',
@@ -154,9 +154,12 @@
 
                 for (var i = 0; i < jsonData.length; ++i) {
                     var item = jsonData[i];
+                    serviceNumber=item.serviceId;
+                    getRating(serviceNumber);
 
                     html += '<tr>';
                     html += '<td>' + item.serviceFullName + '</td>';
+
                     if (item.serviceRating == 0){
                         html += '<td><img src="images/rating/no_rating.png" class="rating_image"/></td>';
                     }else if(item.serviceRating == 1){
@@ -179,13 +182,13 @@
                     html += '<td></td>';
                     html += '<td></td>';
                     html += '<td></td>';
-                    html += '<td><img src="images/rating/star_black.png" class="rating_image_onestar" id="firstImage'+i+'" onclick="rateServiceHostOneStar()"/>' +
-                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="secondImage'+i+'" onclick="rateServiceHostTwoStar()"/>' +
-                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="thirdImage'+i+'" onclick="rateServiceHostThreeStar()"/>' +
-                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage'+i+'" onclick="rateServiceHostFourStar()"/>' +
-                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage'+i+'" onclick="rateServiceHostFiveStar()"/></td>';
+                    html += '<td><img src="images/rating/star_black.png" class="rating_image_onestar" id="firstImage'+i+'" onclick="rateServiceHostOneStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="secondImage'+i+'" onclick="rateServiceHostTwoStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="thirdImage'+i+'" onclick="rateServiceHostThreeStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage'+i+'" onclick="rateServiceHostFourStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage'+i+'" onclick="rateServiceHostFiveStar('+serviceNumber+')"/></td>';
                     html += '</tr>';
-                    //serviceNumber=item.serviceId;
+
                 }
                 html += '</table>';
                 servicesHistory.innerHTML = html;
@@ -198,8 +201,30 @@
             })
 
 
+    //Get rating
+    function getRating(numOfService){
+        fetch('/get_rating', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                serviceId: numOfService
+            })
+        })
+
+            .then(function (response) {
+
+            })
+
+            .catch(function (err) {
+                alert("Something went wrong");
+            });
+    }
+
 ////////// Rating section
-    function rateServiceHostOneStar(){
+    function rateServiceHostOneStar(numOfService){
         fetch('/update_rating', {
             method: 'POST',
             cache: 'no-cache',
@@ -208,6 +233,7 @@
             },
             body: JSON.stringify({
                 serviceRating: 1,
+                serviceId: numOfService
 
 
             })
@@ -222,7 +248,7 @@
             });
     }
 
-    function rateServiceHostTwoStar(){
+    function rateServiceHostTwoStar(numOfService){
         fetch('/update_rating', {
             method: 'POST',
             cache: 'no-cache',
@@ -231,6 +257,7 @@
             },
             body: JSON.stringify({
                 serviceRating: 2,
+                serviceId: numOfService
 
             })
         })
@@ -244,7 +271,7 @@
             });
     }
 
-    function rateServiceHostThreeStar(){
+    function rateServiceHostThreeStar(numOfService){
         fetch('/update_rating', {
             method: 'POST',
             cache: 'no-cache',
@@ -253,6 +280,7 @@
             },
             body: JSON.stringify({
                 serviceRating: 3,
+                serviceId: numOfService
 
             })
         })
@@ -266,7 +294,7 @@
             });
     }
 
-    function rateServiceHostFourStar(){
+    function rateServiceHostFourStar(numOfService){
         fetch('/update_rating', {
             method: 'POST',
             cache: 'no-cache',
@@ -275,6 +303,7 @@
             },
             body: JSON.stringify({
                 serviceRating: 4,
+                serviceId: numOfService
 
             })
         })
@@ -288,7 +317,7 @@
             });
     }
 
-    function rateServiceHostFiveStar(){
+    function rateServiceHostFiveStar(numOfService){
         fetch('/update_rating', {
             method: 'POST',
             cache: 'no-cache',
@@ -297,6 +326,7 @@
             },
             body: JSON.stringify({
                 serviceRating: 5,
+                serviceId: numOfService
 
             })
         })
@@ -309,6 +339,7 @@
                 alert("Something went wrong");
             });
     }
+
 
 
 

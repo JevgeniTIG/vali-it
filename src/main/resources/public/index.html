@@ -69,7 +69,8 @@
 </body>
 
 <script>
-
+    var serviceNumber;
+    var result;
     let showButton = document.getElementById("show_services")
     showButton.addEventListener('click', function filterServices() {
         fetch('/show_suitable_services?serviceAddress=' + serviceLocation.value + '&serviceName=' + service.value + '&servicePrice=' + price.value,{
@@ -102,10 +103,14 @@
 
                 for (var i = 0; i < jsonData.length; ++i) {
                     var item = jsonData[i];
-
+                    serviceNumber=item.serviceId;
                     html += '<tr>';
                     html += '<td>' + item.serviceFullName + '</td>';
-                    if (item.serviceRating == null){
+                    checkIfExists(serviceNumber);
+                    if (result==true){
+                        html += '<td>no rating yet</td>';
+                    }
+                    else if (item.serviceRating == null){
                         html += '<td>Not rated yet</td>';
                     }else if (item.serviceRating == 0){
                         html += '<td><img src="images/rating/no_rating.png" class="rating_image"/></td>';
@@ -146,6 +151,40 @@
 
             })
     });
+
+
+    function checkIfExists(numOfService) {
+        //Shows services history of logged member on the same page
+        fetch('/check_if_experienced_service_exists', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+
+                serviceId: numOfService
+
+            })
+        })
+
+            .then(function (response) {
+                return response.json();
+            })
+
+            .then(function (jsonData) {
+                if(jsonData.length == 0){
+                    result = true;
+                }
+
+
+            })
+
+            .catch(function (err) {
+                alert('Error');
+
+            })
+    }
 
 
 </script>
