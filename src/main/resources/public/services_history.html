@@ -98,7 +98,7 @@
         button.id = "hostButton1";
         button.innerHTML = "Add New Service";
 
-        var div = document.getElementsByTagName("div")[4];
+        var div = document.getElementsByTagName("div")[3];
         div.appendChild(button);
 
 
@@ -124,7 +124,7 @@
         });
     }
 
-
+    var serviceNumber;
     //Shows services history of logged member on the same page
 
         fetch('/show_logged_member_services_history', {
@@ -182,6 +182,7 @@
                     html += '<td></td>';
                     html += '<td><div id="currentRatingOfTheHost"></div></td>';
                     html += '</tr>';
+                    serviceNumber=item.serviceId;
 
 
                 }
@@ -203,6 +204,7 @@
             method: 'POST',
             cache: 'no-cache',
             headers: {
+
                 'Content-Type': 'application/json'
             }
         })
@@ -212,61 +214,20 @@
             })
 
             .then(function (jsonData) {
-                    if(jsonData.valueAsNumber == null || jsonData == 0){
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="firstImage" onclick="rateServiceHostOneStar()"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="secondImage"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="thirdImage"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage"/>';
-                        currentRatingOfTheHost.innerHTML = html;
-                    }
-                    else if(jsonData.valueAsNumber == 1){
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="firstImage"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="secondImage"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="thirdImage"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage"/>';
-                        currentRatingOfTheHost.innerHTML = html;
-                    }
-                    else if(jsonData == 2){
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="firstImage"/>';
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="secondImage"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="thirdImage"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage"/>';
-                        currentRatingOfTheHost.innerHTML = html;
-                    }
-                    else if(jsonData == 3){
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="firstImage"/>';
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="secondImage"/>';
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="thirdImage"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage"/>';
-                        currentRatingOfTheHost.innerHTML = html;
-                    }
-                    else if(jsonData == 4){
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="firstImage"/>';
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="secondImage"/>';
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="thirdImage"/>';
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="fourthImage"/>';
-                        html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage"/>';
-                        currentRatingOfTheHost.innerHTML = html;
-                    }
-                    else if(jsonData == 5){
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="firstImage"/>';
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="secondImage"/>';
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="thirdImage"/>';
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="fourthImage"/>';
-                        html +='<img src="images/rating/star_pink.png" class="rating_image_onestar" id="fifthImage"/>';
-                        currentRatingOfTheHost.innerHTML = html;
-                    }
+                html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="firstImage" onclick="rateServiceHostOneStar()"/>';
+                html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="secondImage" onclick="rateServiceHostTwoStar()"/>';
+                html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="thirdImage" onclick="rateServiceHostThreeStar()"/>';
+                html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage" onclick="rateServiceHostFourStar()"/>';
+                html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage" onclick="rateServiceHostFiveStar()"/>';
+                currentRatingOfTheHost.innerHTML = html;
+
             })
             .catch(function (err) {
                 alert('Error');
             })
     }
 
-
+////////// Rating section
     function rateServiceHostOneStar(){
         fetch('/update_rating', {
             method: 'POST',
@@ -275,7 +236,9 @@
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                hostRating: 1
+                serviceRating: 1,
+                serviceId: serviceNumber
+
             })
         })
 
@@ -288,7 +251,93 @@
             });
     }
 
+    function rateServiceHostTwoStar(){
+        fetch('/update_rating', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                serviceRating: 2,
 
+            })
+        })
+
+            .then(function (response) {
+                alert("Thank You")
+            })
+
+            .catch(function (err) {
+                alert("Something went wrong");
+            });
+    }
+
+    function rateServiceHostThreeStar(){
+        fetch('/update_rating', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                serviceRating: 3,
+
+            })
+        })
+
+            .then(function (response) {
+                alert("Thank You")
+            })
+
+            .catch(function (err) {
+                alert("Something went wrong");
+            });
+    }
+
+    function rateServiceHostFourStar(){
+        fetch('/update_rating', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                serviceRating: 4,
+
+            })
+        })
+
+            .then(function (response) {
+                alert("Thank You")
+            })
+
+            .catch(function (err) {
+                alert("Something went wrong");
+            });
+    }
+
+    function rateServiceHostFiveStar(){
+        fetch('/update_rating', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                serviceRating: 5,
+
+            })
+        })
+
+            .then(function (response) {
+                alert("Thank You")
+            })
+
+            .catch(function (err) {
+                alert("Something went wrong");
+            });
+    }
 
 
 

@@ -115,6 +115,7 @@
         function deleteButtonFunction(rowNum){
             deleteRowFunction();
             deleteService(rowNum);
+            deleteServiceRating(rowNum)
         }
 
     //Deletes a row from browser
@@ -130,6 +131,24 @@
     function deleteService(num) {
 
         fetch('/delete_service', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify({
+
+                serviceId: num
+
+            })
+        })
+    }
+
+    //Deletes a service rating from table 'rating'
+    function deleteServiceRating(num) {
+
+        fetch('/delete_service_rating', {
             method: 'POST',
             cache: 'no-cache',
             headers: {

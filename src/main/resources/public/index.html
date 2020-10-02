@@ -78,7 +78,7 @@
             headers: {
                 'Content-Type': 'application/json'
             }
-            })
+        })
 
 
             .then(function (response) {
@@ -105,8 +105,24 @@
 
                     html += '<tr>';
                     html += '<td>' + item.serviceFullName + '</td>';
-                    if (item.serviceRating == 0){
+                    if (item.serviceRating == null){
+                        html += '<td>Not rated yet</td>';
+                    }else if (item.serviceRating == 0){
                         html += '<td><img src="images/rating/no_rating.png" class="rating_image"/></td>';
+                    }else if(item.serviceRating == 1){
+                        html += '<td><img src="images/rating/1star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 2){
+                        html += '<td><img src="images/rating/2star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 3){
+                        html += '<td><img src="images/rating/3star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 4){
+                        html += '<td><img src="images/rating/4star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 5){
+                        html += '<td><img src="images/rating/5star_rating.png" class="rating_image"/></td>';
                     }
                     html += '<td>' + item.serviceDescription + '</td>';
                     html += '<td>' + item.serviceDuration + '</td>';
@@ -114,6 +130,8 @@
                     html += '<td>' + item.servicePaymentMethod + '</td>';
                     html += '<td>' + item.serviceRoomType + '</td>';
                     html += '<td>' + item.serviceAddress + '</td>';
+                    html += '<td><input type="button" id="blueButton" value="Reserve" ' +
+                        'onclick= "sendToExperiencedServicesTable('+item.serviceId+')"></td>';
                     html += '</tr>';
 
 

@@ -33,11 +33,6 @@ public class BeautyService {
                 hostLogin, passwordEncoder.encode(hostPassword));
     }
 
-    // Adds host details into table 'abouthosts'
-    public void fulfillHostDetails(String hostService, String hostAddress, String hostAddressType, BigInteger hostId){
-        beautyRepository.fulfillHostDetails(hostService, hostAddress, hostAddressType, hostId);
-    }
-
 
     //Adds services into table 'services'
     public void addService(String currentHostLogin, String serviceName, String serviceDescription, String serviceDuration, BigDecimal servicePrice, String servicePaymentMethod,
@@ -79,7 +74,6 @@ public class BeautyService {
     }
 
     //Shows suitable services
-    @PostMapping("show_suitable_services")
     public List<ServiceData> showSuitableServices(String serviceLocation, String serviceName, BigDecimal servicePrice){
         return beautyRepository.showSuitableServices(serviceLocation, serviceName, servicePrice);
     }
@@ -115,7 +109,26 @@ public class BeautyService {
     }
 
     //Updates rating
-    public void updateRating(double hostRating, String memberBeingLogged) {
-        beautyRepository.updateRating(hostRating, memberBeingLogged);
+    public void updateRating(BigInteger serviceId, Double serviceRating) {
+        beautyRepository.updateRating(serviceId, serviceRating);
+    }
+/*
+    //Creates 0 rating once a new service is registered
+    public void createRating(String loggedMemberLogin) {
+        beautyRepository.createRating(loggedMemberLogin);
+    }*/
+
+    public void getRating(double hostRating) {
+        beautyRepository.getRating(hostRating);
+    }
+/*
+    //Deletes specific service rating of logged host from table 'rating'
+    public void deleteLoggedHostServiceRating(BigInteger serviceId) {
+        beautyRepository.deleteLoggedHostServiceRating(serviceId);
+    }*/
+
+    //Checks if a selected service already exists in table 'experienced_services'
+    public BigInteger checkIfExperiencedServiceExists(BigInteger serviceId, String loggedMemberLogin) {
+        return beautyRepository.checkIfExperiencedServiceExists(serviceId, loggedMemberLogin);
     }
 }

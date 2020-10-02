@@ -36,14 +36,6 @@ public class Controller {
     }
 
 
-    //Posts host's additional details into table 'abouthosts'
-    @PostMapping("host_details")
-    public void fulfillHostDetails(@RequestBody HostData request) {
-        beautyService.fulfillHostDetails(request.getHostService(), request.getHostAddress(),
-                request.getHostAddressType(), request.getHostId());
-    }
-
-
     //Posts services into table 'services'
     @PostMapping("add_service")
     public void addService(@RequestBody ServiceData request, Principal principal) {
@@ -96,16 +88,28 @@ public class Controller {
     }
 
 
-    //Deletes specific service of logged host in table 'services'
+    //Deletes specific service of logged host from table 'services'
     @PostMapping("delete_service")
     public void deleteLoggedHostService(@RequestBody ServiceData request) {
         beautyService.deleteLoggedHostService(request.getServiceId());
     }
+/*
+    //Deletes specific service rating of logged host from table 'rating'
+    @PostMapping("delete_service_rating")
+    public void deleteLoggedHostServiceRating(@RequestBody ServiceData request) {
+        beautyService.deleteLoggedHostServiceRating(request.getServiceId());
+    }*/
 
     //Adds a service to table 'experienced_services'
     @PostMapping("add_experienced_service")
     public void addExperiencedService(@RequestBody ServiceData request, Principal principal) {
         beautyService.addExperiencedService(request.getServiceId(), principal.getName());
+    }
+
+    //Checks if a selected service already exists in table 'experienced_services'
+    @PostMapping("check_if_experienced_service_exists")
+    public BigInteger checkIfExperiencedServiceExists(@RequestBody ServiceData request, Principal principal) {
+        return beautyService.checkIfExperiencedServiceExists(request.getServiceId(), principal.getName());
     }
 
     //Shows services history of logged member
@@ -122,8 +126,14 @@ public class Controller {
 
     //Updates rating
     @PostMapping("update_rating")
-    public void updateRating(@RequestBody HostData request, Principal principal){
-        beautyService.updateRating(request.getHostRating(), principal.getName());
+    public void updateRating(@RequestBody ServiceData request){
+        beautyService.updateRating(request.getServiceId(), request.getServiceRating());
+    }
+
+    //Gets current rating of specified host from table 'hosts'
+    @PostMapping("get_rating")
+    public void getRating(@RequestBody HostData request){
+        beautyService.getRating(request.getHostRating());
     }
 
 
@@ -136,6 +146,12 @@ public class Controller {
         String currentMemberName = principal.getName();
         return beautyService.currentUserName(currentMemberName);
     }
+/*
+    //Creates 0-zero rating once a new service is registered
+    @PostMapping("create_rating")
+    public void createRating(Principal principal){
+        beautyService.createRating(principal.getName());
+    }*/
 
 
     // Returns the username of the host that is currently logged in

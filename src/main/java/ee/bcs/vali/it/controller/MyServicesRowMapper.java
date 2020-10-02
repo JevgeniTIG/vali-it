@@ -20,7 +20,7 @@ public class MyServicesRowMapper implements RowMapper<ServiceData>{
         loggedHostServices.setServicePrice(resultSet.getBigDecimal("service_price"));
         loggedHostServices.setServicePaymentMethod(resultSet.getString("payment_method"));
         loggedHostServices.setServiceRoomType(resultSet.getString("room_type"));
-        loggedHostServices.setServiceAddress(resultSet.getString("location"));
+        loggedHostServices.setServiceAddress(resultSet.getString("service_location"));
         loggedHostServices.setServiceId(new BigInteger(resultSet.getString("id")));
         return loggedHostServices;
     }

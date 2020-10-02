@@ -112,17 +112,22 @@
             select[0].append(...matchArray);
         }
         input.addEventListener('change', filterOptions);
-        //input.addEventListener('mouseup', filterOptions);
 
     })();
 
 
 
 
-    // Adds new service into table 'services'
+    // Adds new service into table 'services' and zero rating of just created service into table rating
     let addButton = document.getElementById("add_new_service")
     addButton.addEventListener('click', function addService() {
+        add_a_service()
+        create_a_service_rating()
 
+    });
+
+
+    function add_a_service(){
         fetch('/add_service', {
             method: 'POST',
             cache: 'no-cache',
@@ -152,8 +157,25 @@
             .catch(function (err) {
                 alert('Something went wrong');
             });
+    }
 
-    });
+    function create_a_service_rating(){
+        fetch('/create_rating', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+            .then(function (response) {
+
+            })
+
+            .catch(function (err) {
+                alert('Something went wrong');
+            })
+    }
 
 
     addButton.addEventListener('click', function showJustAddedService() {

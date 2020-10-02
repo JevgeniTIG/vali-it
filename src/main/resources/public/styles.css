@@ -410,7 +410,7 @@ img {
 }
 .rating_image_onestar:hover{
     background: #df2161;
-    opacity: 0.7;
+    border-radius: 10px;
 
 
 }

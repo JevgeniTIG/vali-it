@@ -18,7 +18,7 @@ public class SuitableServicesRowMapper implements RowMapper<ServiceData>{
         suitableServices.setServicePrice(resultSet.getBigDecimal("service_price"));
         suitableServices.setServicePaymentMethod(resultSet.getString("payment_method"));
         suitableServices.setServiceRoomType(resultSet.getString("room_type"));
-        suitableServices.setServiceAddress(resultSet.getString("location"));
+        suitableServices.setServiceAddress(resultSet.getString("service_location"));
         suitableServices.setServiceFullName(resultSet.getString("full_name"));
         suitableServices.setServiceId(BigInteger.valueOf(resultSet.getLong("id")));
         return suitableServices;

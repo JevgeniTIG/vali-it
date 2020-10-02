@@ -5,30 +5,6 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
     <changeSet  author="Jevgeni"  id="2020-09-14">
-        <createTable tableName="users">
-            <column name="id" type="BIGINT" autoIncrement="true">
-                <constraints nullable="false" primaryKey="true" unique="true"/>
-            </column>
-            <column name="firstname" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="lastname" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="useremail" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="userphone" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="userlogin" type="TEXT">
-                <constraints nullable="false" unique="true"/>
-            </column>
-            <column name="password" type="TEXT">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
         <createTable tableName="hosts">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints nullable="false" primaryKey="true" unique="true"/>
@@ -38,9 +14,6 @@
             </column>
             <column name="lastname" type="TEXT">
                 <constraints nullable="false"/>
-            </column>
-            <column name="rating" type="DOUBLE">
-                <constraints nullable="true"/>
             </column>
             <column name="hostemail" type="TEXT">
                 <constraints nullable="false"/>
@@ -59,27 +32,15 @@
             </column>
         </createTable>
 
-
-        <createTable  tableName="roles">
-            <column  name="id"  type="BIGINT" autoIncrement="true">
-                <constraints  nullable="false"  primaryKey="true"/>
-            </column>
-            <column  name="user_role"  type="TEXT">
-                <constraints  nullable="false"/>
-            </column>
-            <column  name="user_id"  type="BIGINT">
-                <constraints  nullable="false" unique="false"
-                              foreignKeyName="fk_roles_hosts" references="hosts(id)"/>
-            </column>
-        </createTable>
-
-
     </changeSet>
 
     <changeSet author="Jevgeni" id="2020-09-15">
         <createTable  tableName="services">
             <column  name="id"  type="BIGINT" autoIncrement="true">
                 <constraints  nullable="false"  primaryKey="true"/>
+            </column>
+            <column  name="rating"  type="DOUBLE">
+                <constraints  nullable="true"/>
             </column>
             <column  name="service_name"  type="TEXT">
                 <constraints  nullable="false"/>
@@ -99,7 +60,7 @@
             <column  name="room_type"  type="text">
                 <constraints  nullable="false"/>
             </column>
-            <column  name="location"  type="text">
+            <column  name="service_location"  type="text">
                 <constraints  nullable="false"/>
             </column>
             <column name="host_id" type="BIGINT">
@@ -115,14 +76,11 @@
             <column  name="id"  type="BIGINT" autoIncrement="true">
                 <constraints  nullable="false"  primaryKey="true"/>
             </column>
-            <column  name="rating"  type="TEXT">
+            <column  name="rating"  type="DOUBLE">
                 <constraints  nullable="true"/>
             </column>
             <column name="service_id" type="BIGINT">
-                <constraints nullable="false"/>
-            </column>
-            <column name="host_id" type="BIGINT">
-                <constraints foreignKeyName="fk_experienced_services_services" references="hosts(id)"/>
+                <constraints foreignKeyName="fk_experienced_services_services" references="services(id)"/>
             </column>
             <column name="logged_member_id" type="BIGINT">
                 <constraints nullable="false"/>
@@ -130,6 +88,5 @@
 
         </createTable>
     </changeSet>
-
 
 </databaseChangeLog>
