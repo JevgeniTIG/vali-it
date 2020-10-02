@@ -7,7 +7,7 @@
 
 
 </head>
-<body onload="javascript:showRateServiceHost()">
+<body>
 <div class="header">
     <img src="logo.png" alt="logo"/>
     <div class="header-right">
@@ -124,9 +124,8 @@
         });
     }
 
-    var serviceNumber;
-    //Shows services history of logged member on the same page
 
+    //Shows services history of logged member on the same page
         fetch('/show_logged_member_services_history', {
             method: 'POST',
             cache: 'no-cache',
@@ -180,11 +179,13 @@
                     html += '<td></td>';
                     html += '<td></td>';
                     html += '<td></td>';
-                    html += '<td><div id="currentRatingOfTheHost"></div></td>';
+                    html += '<td><img src="images/rating/star_black.png" class="rating_image_onestar" id="firstImage'+i+'" onclick="rateServiceHostOneStar()"/>' +
+                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="secondImage'+i+'" onclick="rateServiceHostTwoStar()"/>' +
+                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="thirdImage'+i+'" onclick="rateServiceHostThreeStar()"/>' +
+                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage'+i+'" onclick="rateServiceHostFourStar()"/>' +
+                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage'+i+'" onclick="rateServiceHostFiveStar()"/></td>';
                     html += '</tr>';
-                    serviceNumber=item.serviceId;
-
-
+                    //serviceNumber=item.serviceId;
                 }
                 html += '</table>';
                 servicesHistory.innerHTML = html;
@@ -196,36 +197,6 @@
 
             })
 
-    //Rates service host by getting a current rating and adding a rating of current member (logged member)
-
-    function showRateServiceHost() {
-        var html = '<div class="ratingBox">';
-        fetch('/rate_service', {
-            method: 'POST',
-            cache: 'no-cache',
-            headers: {
-
-                'Content-Type': 'application/json'
-            }
-        })
-
-            .then(function (response) {
-                return response.json();
-            })
-
-            .then(function (jsonData) {
-                html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="firstImage" onclick="rateServiceHostOneStar()"/>';
-                html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="secondImage" onclick="rateServiceHostTwoStar()"/>';
-                html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="thirdImage" onclick="rateServiceHostThreeStar()"/>';
-                html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage" onclick="rateServiceHostFourStar()"/>';
-                html +='<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage" onclick="rateServiceHostFiveStar()"/>';
-                currentRatingOfTheHost.innerHTML = html;
-
-            })
-            .catch(function (err) {
-                alert('Error');
-            })
-    }
 
 ////////// Rating section
     function rateServiceHostOneStar(){
@@ -237,7 +208,7 @@
             },
             body: JSON.stringify({
                 serviceRating: 1,
-                serviceId: serviceNumber
+
 
             })
         })

@@ -112,20 +112,6 @@ public class BeautyService {
     public void updateRating(BigInteger serviceId, Double serviceRating) {
         beautyRepository.updateRating(serviceId, serviceRating);
     }
-/*
-    //Creates 0 rating once a new service is registered
-    public void createRating(String loggedMemberLogin) {
-        beautyRepository.createRating(loggedMemberLogin);
-    }*/
-
-    public void getRating(double hostRating) {
-        beautyRepository.getRating(hostRating);
-    }
-/*
-    //Deletes specific service rating of logged host from table 'rating'
-    public void deleteLoggedHostServiceRating(BigInteger serviceId) {
-        beautyRepository.deleteLoggedHostServiceRating(serviceId);
-    }*/
 
     //Checks if a selected service already exists in table 'experienced_services'
     public BigInteger checkIfExperiencedServiceExists(BigInteger serviceId, String loggedMemberLogin) {

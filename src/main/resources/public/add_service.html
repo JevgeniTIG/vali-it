@@ -118,11 +118,10 @@
 
 
 
-    // Adds new service into table 'services' and zero rating of just created service into table rating
+    // Adds new service into table 'services'
     let addButton = document.getElementById("add_new_service")
     addButton.addEventListener('click', function addService() {
         add_a_service()
-        create_a_service_rating()
 
     });
 
@@ -157,24 +156,6 @@
             .catch(function (err) {
                 alert('Something went wrong');
             });
-    }
-
-    function create_a_service_rating(){
-        fetch('/create_rating', {
-            method: 'POST',
-            cache: 'no-cache',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-
-            .then(function (response) {
-
-            })
-
-            .catch(function (err) {
-                alert('Something went wrong');
-            })
     }
 
 

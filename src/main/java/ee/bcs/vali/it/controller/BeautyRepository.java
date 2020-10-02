@@ -82,16 +82,6 @@ public class BeautyRepository {
         paramMap.put("rowNumberToDelete", rowNumberToDelete);
         dataBase.update(sql, paramMap);
     }
-/*
-    //Deletes specific service rating of logged host from table 'rating'
-    public void deleteLoggedHostServiceRating(BigInteger rowNumberToDelete) {
-        String sql = "DELETE FROM rating WHERE id= :rowNumberToDelete";
-        Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("rowNumberToDelete", rowNumberToDelete);
-        dataBase.update(sql, paramMap);
-    }*/
-
-
 
     //Adds a service to table 'experienced_services'
     public void addExperiencedService(BigInteger serviceId, String currentMemberLogin) {
@@ -112,7 +102,7 @@ public class BeautyRepository {
         String sql = "SELECT rating FROM experienced_services WHERE service_id= :serviceId)";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("service_id", serviceId);
-        paramMap.put("serviceId", serviceId);
+        //paramMap.put("serviceId", serviceId);
         return dataBase.queryForObject(sql, paramMap, Double.class);
     }
 
@@ -229,22 +219,6 @@ public class BeautyRepository {
         String postal = response.getPostal().getCode();
         String state = response.getLeastSpecificSubdivision().getName();
     }
-
-
-
-    public void getRating(double hostRating) {
-    }
-
-/*
-    //Creates 0-ZERO rating once a new service is registered
-    public void createRating(String loggedMemberLogin) {
-        String sql = "INSERT INTO experienced_services (rating, service_id, logged_member_id)\n" +
-                "                VALUES (0, (SELECT id FROM services WHERE host_id = (SELECT id FROM hosts WHERE hostlogin= :loggedMemberLogin)), 0)";
-        Map<String, Object> paramMap = new HashMap<>();
-        paramMap.put("hostlogin", loggedMemberLogin);
-        paramMap.put("loggedMemberLogin", loggedMemberLogin);
-        dataBase.update(sql, paramMap);
-    }*/
 
     //Checks if a selected service already exists in table 'experienced_services'
     public BigInteger checkIfExperiencedServiceExists(BigInteger serviceId, String loggedMemberLogin) {

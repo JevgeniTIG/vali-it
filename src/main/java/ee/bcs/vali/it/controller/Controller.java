@@ -93,12 +93,6 @@ public class Controller {
     public void deleteLoggedHostService(@RequestBody ServiceData request) {
         beautyService.deleteLoggedHostService(request.getServiceId());
     }
-/*
-    //Deletes specific service rating of logged host from table 'rating'
-    @PostMapping("delete_service_rating")
-    public void deleteLoggedHostServiceRating(@RequestBody ServiceData request) {
-        beautyService.deleteLoggedHostServiceRating(request.getServiceId());
-    }*/
 
     //Adds a service to table 'experienced_services'
     @PostMapping("add_experienced_service")
@@ -130,12 +124,6 @@ public class Controller {
         beautyService.updateRating(request.getServiceId(), request.getServiceRating());
     }
 
-    //Gets current rating of specified host from table 'hosts'
-    @PostMapping("get_rating")
-    public void getRating(@RequestBody HostData request){
-        beautyService.getRating(request.getHostRating());
-    }
-
 
     // Returns the username of the host that is currently logged in
     @RequestMapping(value = "/role", method = RequestMethod.GET)
@@ -146,12 +134,6 @@ public class Controller {
         String currentMemberName = principal.getName();
         return beautyService.currentUserName(currentMemberName);
     }
-/*
-    //Creates 0-zero rating once a new service is registered
-    @PostMapping("create_rating")
-    public void createRating(Principal principal){
-        beautyService.createRating(principal.getName());
-    }*/
 
 
     // Returns the username of the host that is currently logged in

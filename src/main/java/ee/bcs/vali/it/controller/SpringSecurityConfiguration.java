@@ -20,8 +20,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/styles.css", "/logo.png", "/images/**",
                         "/pic_carousel_1.jpg", "/register_new_member", "/member_register_page.html", "/register_new_host",
                         "/host_register_page.html", "/css/**", "/fonts/**", "/", "/add_service", "/show_logged_host_services",
-                        "/delete_service", "/delete_service_rating", "/show_suitable_services", "/index.html", "/add_experienced_service",
-                        "/show_logged_member_services_history", "/rate_service", "/update_rating", "/create_rating",
+                        "/delete_service", "/show_suitable_services", "/index.html", "/add_experienced_service",
+                        "/show_logged_member_services_history", "/rate_service", "/update_rating",
                         "/check_if_experienced_service_exists").permitAll()
                 .anyRequest().authenticated()
                 .and()
