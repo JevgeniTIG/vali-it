@@ -21,8 +21,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/pic_carousel_1.jpg", "/register_new_member", "/member_register_page.html", "/register_new_host",
                         "/host_register_page.html", "/css/**", "/fonts/**", "/", "/add_service", "/show_logged_host_services",
                         "/delete_service", "/show_suitable_services", "/show_suitable_services_logged", "/index.html", "/add_experienced_service",
-                        "/show_logged_member_services_history", "/update_rating", "/get_rating",
-                        "/check_if_experienced_service_exists").permitAll()
+                        "/show_logged_member_services_history", "/update_rating", "/get_rating"
+                        ).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

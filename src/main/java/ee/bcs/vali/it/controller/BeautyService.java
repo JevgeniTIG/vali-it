@@ -15,7 +15,11 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.InetAddress;
+import java.sql.ResultSet;
 import java.util.List;
+import java.util.OptionalDouble;
+
+import static javax.swing.UIManager.getInt;
 
 @Service
 public class BeautyService {
@@ -109,21 +113,25 @@ public class BeautyService {
     }
 
     //Updates rating
-    public void updateRating(BigInteger serviceId, Double serviceRating) {
-        double averageRating = (beautyRepository.getRating(serviceId)+serviceRating)/2;
-        int averageRatingInt = (int) averageRating;
-        double fractional = averageRating - averageRatingInt;
-        if (fractional<0.5){
-            averageRating = averageRatingInt;
-        }else if (fractional>=0.5){
-            averageRating = averageRatingInt+1;
-        }
+    public void updateRating(BigInteger serviceId, double serviceRating) {
+
+        double averageRating;
+
+            averageRating = (beautyRepository.getRating(serviceId) + serviceRating)/2;
+            int averageRatingInt = (int) averageRating;
+            double fractional = averageRating - averageRatingInt;
+            if (fractional<0.25){
+                averageRating = averageRatingInt;
+            }else if (fractional>=0.25){
+                averageRating = averageRatingInt+0.5;
+            }
+
         beautyRepository.updateRating(serviceId, averageRating);
     }
 
     //Gets current rating
     public double getRating(BigInteger serviceId) {
-        return beautyRepository.getRating(serviceId);
+            return beautyRepository.getRating(serviceId);
     }
 
     //Checks if a selected service already exists in table 'experienced_services'

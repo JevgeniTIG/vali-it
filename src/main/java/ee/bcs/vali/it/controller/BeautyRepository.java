@@ -17,6 +17,7 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalDouble;
 
 @Repository
 public class BeautyRepository {
@@ -99,7 +100,7 @@ public class BeautyRepository {
 
 
     //Updates rating
-    public void updateRating(BigInteger serviceId, Double serviceRating) {
+    public void updateRating(BigInteger serviceId, double serviceRating) {
         String sql = "UPDATE services SET rating= :serviceRating WHERE id= :serviceId";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("serviceRating", serviceRating);
@@ -245,7 +246,11 @@ public class BeautyRepository {
         String sql = "SELECT rating FROM services WHERE id= :serviceId";
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("serviceId", serviceId);
-        return dataBase.queryForObject(sql, paramMap, double.class);
+        if (dataBase.queryForObject(sql, paramMap, Double.class) == null){
+            return 0;
+        } else{
+            return dataBase.queryForObject(sql, paramMap, Double.class);
+        }
     }
 }
 

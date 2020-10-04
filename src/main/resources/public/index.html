@@ -38,7 +38,7 @@
                         <option value="Service">&nbspSERVICE&nbsp</option>
                         <option value="Massage">&nbspMassage&nbsp</option>
                         <option value="Haircut">&nbspHaircut&nbsp</option>
-                        <option value="NailCare">&nbspNailCare&nbsp</option>
+                        <option value="Nailcare">&nbspNailCare&nbsp</option>
                     </select>
                 </td>
                 <td>
@@ -106,25 +106,35 @@
                     serviceNumber=item.serviceId;
                     html += '<tr>';
                     html += '<td>' + item.serviceFullName + '</td>';
-                    checkIfExists(serviceNumber);
-                    if (result==true){
-                        html += '<td>no rating yet</td>';
+                    if (item.serviceRating == null || item.serviceRating==0){
+                        html += '<td style="color: #df2161">not rated yet</td>';
                     }
-                    else if (item.serviceRating == null){
-                        html += '<td>Not rated yet</td>';
-                    }else if (item.serviceRating == 0){
-                        html += '<td><img src="images/rating/no_rating.png" class="rating_image"/></td>';
-                    }else if(item.serviceRating == 1){
+                    else if(item.serviceRating == 0.5){
+                        html += '<td><img src="images/rating/half_star.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 1){
                         html += '<td><img src="images/rating/1star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 1.5){
+                        html += '<td><img src="images/rating/one_and_half_star.png" class="rating_image"/></td>';
                     }
                     else if(item.serviceRating == 2){
                         html += '<td><img src="images/rating/2star_rating.png" class="rating_image"/></td>';
                     }
+                    else if(item.serviceRating == 2.5){
+                        html += '<td><img src="images/rating/two_and_half_star.png" class="rating_image"/></td>';
+                    }
                     else if(item.serviceRating == 3){
                         html += '<td><img src="images/rating/3star_rating.png" class="rating_image"/></td>';
                     }
+                    else if(item.serviceRating == 3.5){
+                        html += '<td><img src="images/rating/three_and_half_star.png" class="rating_image"/></td>';
+                    }
                     else if(item.serviceRating == 4){
                         html += '<td><img src="images/rating/4star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 4.5){
+                        html += '<td><img src="images/rating/four_and_half_star.png" class="rating_image"/></td>';
                     }
                     else if(item.serviceRating == 5){
                         html += '<td><img src="images/rating/5star_rating.png" class="rating_image"/></td>';
@@ -136,7 +146,7 @@
                     html += '<td>' + item.serviceRoomType + '</td>';
                     html += '<td>' + item.serviceAddress + '</td>';
                     html += '<td><input type="button" id="blueButton" value="Reserve" ' +
-                        'onclick= "sendToExperiencedServicesTable('+item.serviceId+')"></td>';
+                        'onclick= "location.href=\'member_login_page.html\'"></td>';
                     html += '</tr>';
 
 
@@ -152,7 +162,7 @@
             })
     });
 
-
+/*
     function checkIfExists(numOfService) {
         //Shows services history of logged member on the same page
         fetch('/check_if_experienced_service_exists', {
@@ -186,6 +196,6 @@
             })
     }
 
-
+*/
 </script>
 </html>

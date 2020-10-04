@@ -404,13 +404,12 @@ img {
 }
 
 .rating_image_onestar{
-    width: 16px;
+    width: 8px;
     height: 15px;
     background: none
 }
 .rating_image_onestar:hover{
     background: #df2161;
-    border-radius: 10px;
 
 
 }

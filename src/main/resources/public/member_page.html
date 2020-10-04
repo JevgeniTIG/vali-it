@@ -39,7 +39,7 @@
                         <option value="Service">&nbspSERVICE&nbsp</option>
                         <option value="Massage">&nbspMassage&nbsp</option>
                         <option value="Haircut">&nbspHaircut&nbsp</option>
-                        <option value="NailCare">&nbspNailCare&nbsp</option>
+                        <option value="Nailcare">&nbspNailCare&nbsp</option>
                     </select>
                 </td>
                 <td>
@@ -195,13 +195,10 @@
                     serviceNumber=item.serviceId;
                     html += '<tr>';
                     html += '<td>' + item.serviceFullName + '</td>';
-                    checkIfExists(serviceNumber);
-                    if (result==true){
-                        html += '<td>no rating yet</td>';
+                    if (item.serviceRating == null || item.serviceRating==0){
+                        html += '<td style="color: #df2161">not rated yet</td>';
                     }
-                    else if (item.serviceRating == 0){
-                        html += '<td><img src="images/rating/no_rating.png" class="rating_image"/></td>';
-                    }else if(item.serviceRating == 1){
+                    else if(item.serviceRating == 1){
                         html += '<td><img src="images/rating/1star_rating.png" class="rating_image"/></td>';
                     }
                     else if(item.serviceRating == 2){
@@ -264,40 +261,6 @@
             })
 
     }
-
-    function checkIfExists(numOfService) {
-        //Shows services history of logged member on the same page
-        fetch('/check_if_experienced_service_exists', {
-            method: 'POST',
-            cache: 'no-cache',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-
-                serviceId: numOfService
-
-            })
-        })
-
-            .then(function (response) {
-                return response.json();
-            })
-
-            .then(function (jsonData) {
-                if(jsonData.length == 0){
-                    result = true;
-                }
-
-
-            })
-
-            .catch(function (err) {
-                alert('Error');
-
-            })
-    }
-
 
 
 

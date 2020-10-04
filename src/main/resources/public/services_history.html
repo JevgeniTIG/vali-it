@@ -125,6 +125,7 @@
     }
 
     var serviceNumber;
+    var result;
     //Shows services history of logged member on the same page
         fetch('/show_logged_member_services_history', {
             method: 'POST',
@@ -160,8 +161,8 @@
                     html += '<tr>';
                     html += '<td>' + item.serviceFullName + '</td>';
 
-                    if (item.serviceRating == 0){
-                        html += '<td><img src="images/rating/no_rating.png" class="rating_image"/></td>';
+                    if (item.serviceRating == null || item.serviceRating==0){
+                        html += '<td style="color: #df2161">not rated yet</td>';
                     }else if(item.serviceRating == 1){
                         html += '<td><img src="images/rating/1star_rating.png" class="rating_image"/></td>';
                     }
@@ -182,11 +183,16 @@
                     html += '<td></td>';
                     html += '<td></td>';
                     html += '<td></td>';
-                    html += '<td><img src="images/rating/star_black.png" class="rating_image_onestar" id="firstImage'+i+'" onclick="rateServiceHostOneStar('+serviceNumber+')"/>' +
-                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="secondImage'+i+'" onclick="rateServiceHostTwoStar('+serviceNumber+')"/>' +
-                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="thirdImage'+i+'" onclick="rateServiceHostThreeStar('+serviceNumber+')"/>' +
-                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="fourthImage'+i+'" onclick="rateServiceHostFourStar('+serviceNumber+')"/>' +
-                        '<img src="images/rating/star_black.png" class="rating_image_onestar" id="fifthImage'+i+'" onclick="rateServiceHostFiveStar('+serviceNumber+')"/></td>';
+                    html += '<td><img src="images/rating/star_black_left.png" class="rating_image_onestar" id="firstImage'+i+'" onclick="rateServiceHostHalfStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_right.png" class="rating_image_onestar" id="secondImage'+i+'" onclick="rateServiceHostOneStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_left.png" class="rating_image_onestar" id="thirdImage'+i+'" onclick="rateServiceHostOneAndHalfStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_right.png" class="rating_image_onestar" id="fourthImage'+i+'" onclick="rateServiceHostTwoStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_left.png" class="rating_image_onestar" id="fifthImage'+i+'" onclick="rateServiceHostTwoAndHalfStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_right.png" class="rating_image_onestar" id="firstImage'+i+'" onclick="rateServiceHostThreeStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_left.png" class="rating_image_onestar" id="secondImage'+i+'" onclick="rateServiceHostThreeAndHalfStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_right.png" class="rating_image_onestar" id="thirdImage'+i+'" onclick="rateServiceHostFourStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_left.png" class="rating_image_onestar" id="fourthImage'+i+'" onclick="rateServiceHostFourAndHalfStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_right.png" class="rating_image_onestar" id="fifthImage'+i+'" onclick="rateServiceHostFiveStar('+serviceNumber+')"/></td>';
                     html += '</tr>';
 
                 }
@@ -224,6 +230,30 @@
     }
 
 ////////// Rating section
+    function rateServiceHostHalfStar(numOfService){
+        fetch('/update_rating', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                serviceRating: 0.5,
+                serviceId: numOfService
+
+
+            })
+        })
+
+            .then(function (response) {
+                alert("Thank You")
+            })
+
+            .catch(function (err) {
+                alert("Something went wrong");
+            });
+    }
+
     function rateServiceHostOneStar(numOfService){
         fetch('/update_rating', {
             method: 'POST',
@@ -235,6 +265,28 @@
                 serviceRating: 1,
                 serviceId: numOfService
 
+            })
+        })
+
+            .then(function (response) {
+                alert("Thank You")
+            })
+
+            .catch(function (err) {
+                alert("Something went wrong");
+            });
+    }
+
+    function rateServiceHostOneAndHalfStar(numOfService){
+        fetch('/update_rating', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                serviceRating: 1.5,
+                serviceId: numOfService
 
             })
         })
@@ -271,6 +323,29 @@
             });
     }
 
+    function rateServiceHostTwoAndHalfStar(numOfService){
+        fetch('/update_rating', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                serviceRating: 2.5,
+                serviceId: numOfService
+
+            })
+        })
+
+            .then(function (response) {
+                alert("Thank You")
+            })
+
+            .catch(function (err) {
+                alert("Something went wrong");
+            });
+    }
+
     function rateServiceHostThreeStar(numOfService){
         fetch('/update_rating', {
             method: 'POST',
@@ -280,6 +355,30 @@
             },
             body: JSON.stringify({
                 serviceRating: 3,
+                serviceId: numOfService
+
+
+            })
+        })
+
+            .then(function (response) {
+                alert("Thank You")
+            })
+
+            .catch(function (err) {
+                alert("Something went wrong");
+            });
+    }
+
+    function rateServiceHostThreeAndHalfStar(numOfService){
+        fetch('/update_rating', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                serviceRating: 3.5,
                 serviceId: numOfService
 
             })
@@ -317,6 +416,29 @@
             });
     }
 
+    function rateServiceHostFourAndHalfStar(numOfService){
+        fetch('/update_rating', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                serviceRating: 4.5,
+                serviceId: numOfService
+
+            })
+        })
+
+            .then(function (response) {
+                alert("Thank You")
+            })
+
+            .catch(function (err) {
+                alert("Something went wrong");
+            });
+    }
+
     function rateServiceHostFiveStar(numOfService){
         fetch('/update_rating', {
             method: 'POST',
@@ -340,9 +462,40 @@
             });
     }
 
+/*
+    function checkIfExists(numOfService) {
+        //Shows services history of logged member on the same page
+        fetch('/check_if_experienced_service_exists', {
+            method: 'POST',
+            cache: 'no-cache',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
 
+                serviceId: numOfService
 
+            })
+        })
 
+            .then(function (response) {
+                return response.json();
+            })
+
+            .then(function (jsonData) {
+                if(jsonData.length == 0){
+                    result = true;
+                }
+
+            })
+
+            .catch(function (err) {
+                alert('Error');
+
+            })
+    }
+
+*/
 
 </script>
 </html>
