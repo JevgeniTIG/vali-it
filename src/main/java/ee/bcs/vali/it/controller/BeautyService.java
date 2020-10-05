@@ -116,7 +116,10 @@ public class BeautyService {
     public void updateRating(BigInteger serviceId, double serviceRating) {
 
         double averageRating;
-
+        if (beautyRepository.getRating(serviceId) == 0){
+            averageRating = (beautyRepository.getRating(serviceId) + serviceRating);
+        }
+        else {
             averageRating = (beautyRepository.getRating(serviceId) + serviceRating)/2;
             int averageRatingInt = (int) averageRating;
             double fractional = averageRating - averageRatingInt;
@@ -125,7 +128,7 @@ public class BeautyService {
             }else if (fractional>=0.25){
                 averageRating = averageRatingInt+0.5;
             }
-
+        }
         beautyRepository.updateRating(serviceId, averageRating);
     }
 

@@ -198,17 +198,32 @@
                     if (item.serviceRating == null || item.serviceRating==0){
                         html += '<td style="color: #df2161">not rated yet</td>';
                     }
+                    else if(item.serviceRating == 0.5){
+                        html += '<td><img src="images/rating/half_star.png" class="rating_image"/></td>';
+                    }
                     else if(item.serviceRating == 1){
                         html += '<td><img src="images/rating/1star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 1.5){
+                        html += '<td><img src="images/rating/one_and_half_star.png" class="rating_image"/></td>';
                     }
                     else if(item.serviceRating == 2){
                         html += '<td><img src="images/rating/2star_rating.png" class="rating_image"/></td>';
                     }
+                    else if(item.serviceRating == 2.5){
+                        html += '<td><img src="images/rating/two_and_half_star.png" class="rating_image"/></td>';
+                    }
                     else if(item.serviceRating == 3){
                         html += '<td><img src="images/rating/3star_rating.png" class="rating_image"/></td>';
                     }
+                    else if(item.serviceRating == 3.5){
+                        html += '<td><img src="images/rating/three_and_half_star.png" class="rating_image"/></td>';
+                    }
                     else if(item.serviceRating == 4){
                         html += '<td><img src="images/rating/4star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 4.5){
+                        html += '<td><img src="images/rating/four_and_half_star.png" class="rating_image"/></td>';
                     }
                     else if(item.serviceRating == 5){
                         html += '<td><img src="images/rating/5star_rating.png" class="rating_image"/></td>';

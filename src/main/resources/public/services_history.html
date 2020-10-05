@@ -163,17 +163,32 @@
 
                     if (item.serviceRating == null || item.serviceRating==0){
                         html += '<td style="color: #df2161">not rated yet</td>';
-                    }else if(item.serviceRating == 1){
+                    }else if(item.serviceRating == 0.5){
+                        html += '<td><img src="images/rating/half_star.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 1){
                         html += '<td><img src="images/rating/1star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 1.5){
+                        html += '<td><img src="images/rating/one_and_half_star.png" class="rating_image"/></td>';
                     }
                     else if(item.serviceRating == 2){
                         html += '<td><img src="images/rating/2star_rating.png" class="rating_image"/></td>';
                     }
+                    else if(item.serviceRating == 2.5){
+                        html += '<td><img src="images/rating/two_and_half_star.png" class="rating_image"/></td>';
+                    }
                     else if(item.serviceRating == 3){
                         html += '<td><img src="images/rating/3star_rating.png" class="rating_image"/></td>';
                     }
+                    else if(item.serviceRating == 3.5){
+                        html += '<td><img src="images/rating/three_and_half_star.png" class="rating_image"/></td>';
+                    }
                     else if(item.serviceRating == 4){
                         html += '<td><img src="images/rating/4star_rating.png" class="rating_image"/></td>';
+                    }
+                    else if(item.serviceRating == 4.5){
+                        html += '<td><img src="images/rating/four_and_half_star.png" class="rating_image"/></td>';
                     }
                     else if(item.serviceRating == 5){
                         html += '<td><img src="images/rating/5star_rating.png" class="rating_image"/></td>';
@@ -183,16 +198,16 @@
                     html += '<td></td>';
                     html += '<td></td>';
                     html += '<td></td>';
-                    html += '<td><img src="images/rating/star_black_left.png" class="rating_image_onestar" id="firstImage'+i+'" onclick="rateServiceHostHalfStar('+serviceNumber+')"/>' +
-                        '<img src="images/rating/star_black_right.png" class="rating_image_onestar" id="secondImage'+i+'" onclick="rateServiceHostOneStar('+serviceNumber+')"/>' +
-                        '<img src="images/rating/star_black_left.png" class="rating_image_onestar" id="thirdImage'+i+'" onclick="rateServiceHostOneAndHalfStar('+serviceNumber+')"/>' +
-                        '<img src="images/rating/star_black_right.png" class="rating_image_onestar" id="fourthImage'+i+'" onclick="rateServiceHostTwoStar('+serviceNumber+')"/>' +
-                        '<img src="images/rating/star_black_left.png" class="rating_image_onestar" id="fifthImage'+i+'" onclick="rateServiceHostTwoAndHalfStar('+serviceNumber+')"/>' +
-                        '<img src="images/rating/star_black_right.png" class="rating_image_onestar" id="firstImage'+i+'" onclick="rateServiceHostThreeStar('+serviceNumber+')"/>' +
-                        '<img src="images/rating/star_black_left.png" class="rating_image_onestar" id="secondImage'+i+'" onclick="rateServiceHostThreeAndHalfStar('+serviceNumber+')"/>' +
-                        '<img src="images/rating/star_black_right.png" class="rating_image_onestar" id="thirdImage'+i+'" onclick="rateServiceHostFourStar('+serviceNumber+')"/>' +
-                        '<img src="images/rating/star_black_left.png" class="rating_image_onestar" id="fourthImage'+i+'" onclick="rateServiceHostFourAndHalfStar('+serviceNumber+')"/>' +
-                        '<img src="images/rating/star_black_right.png" class="rating_image_onestar" id="fifthImage'+i+'" onclick="rateServiceHostFiveStar('+serviceNumber+')"/></td>';
+                    html += '<td><img src="images/rating/star_black_left_half.png" onmouseover="hoverLeft(this);" onmouseout="unhoverLeft(this);" class="rating_image_onestar" id="firstImage'+i+'" onclick="rateServiceHostHalfStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_right_half.png" onmouseover="hoverRight(this);" onmouseout="unhoverRight(this);" class="rating_image_onestar" id="secondImage'+i+'" onclick="rateServiceHostOneStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_left_half.png" onmouseover="hoverLeft(this);" onmouseout="unhoverLeft(this);" class="rating_image_onestar" id="thirdImage'+i+'" onclick="rateServiceHostOneAndHalfStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_right_half.png" onmouseover="hoverRight(this);" onmouseout="unhoverRight(this);" class="rating_image_onestar" id="fourthImage'+i+'" onclick="rateServiceHostTwoStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_left_half.png" onmouseover="hoverLeft(this);" onmouseout="unhoverLeft(this);" class="rating_image_onestar" id="fifthImage'+i+'" onclick="rateServiceHostTwoAndHalfStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_right_half.png" onmouseover="hoverRight(this);" onmouseout="unhoverRight(this);" class="rating_image_onestar" id="firstImage'+i+'" onclick="rateServiceHostThreeStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_left_half.png" onmouseover="hoverLeft(this);" onmouseout="unhoverLeft(this);" class="rating_image_onestar" id="secondImage'+i+'" onclick="rateServiceHostThreeAndHalfStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_right_half.png" onmouseover="hoverRight(this);" onmouseout="unhoverRight(this);" class="rating_image_onestar" id="thirdImage'+i+'" onclick="rateServiceHostFourStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_left_half.png" onmouseover="hoverLeft(this);" onmouseout="unhoverLeft(this);" class="rating_image_onestar" id="fourthImage'+i+'" onclick="rateServiceHostFourAndHalfStar('+serviceNumber+')"/>' +
+                        '<img src="images/rating/star_black_right_half.png" onmouseover="hoverRight(this);" onmouseout="unhoverRight(this);" class="rating_image_onestar" id="fifthImage'+i+'" onclick="rateServiceHostFiveStar('+serviceNumber+')"/></td>';
                     html += '</tr>';
 
                 }
@@ -205,6 +220,23 @@
                 alert('Error');
 
             })
+
+
+    function hoverLeft(element) {
+        element.setAttribute('src', 'images/rating/star_pink_left_half.png');
+    }
+
+    function unhoverLeft(element) {
+        element.setAttribute('src', 'images/rating/star_black_left_half.png');
+    }
+
+    function hoverRight(element) {
+        element.setAttribute('src', 'images/rating/star_pink_right_half.png');
+    }
+
+    function unhoverRight(element) {
+        element.setAttribute('src', 'images/rating/star_black_right_half.png');
+    }
 
 
     //Get rating
